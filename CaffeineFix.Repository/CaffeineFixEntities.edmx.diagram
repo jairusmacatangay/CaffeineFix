@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="06734de342bc479790cddc2979da035b" Name="Diagram1">
+        <EntityTypeShape EntityType="CaffeineFixModel.DrinkwareType" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaffeineFixModel.EquipmentType" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaffeineFixModel.ProductCategory" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaffeineFixModel.ProductImage" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaffeineFixModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaffeineFixModel.RoastLevel" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="CaffeineFixModel.FK_Products_DrinkwareType1" ManuallyRouted="false" />
+        <AssociationConnector Association="CaffeineFixModel.FK_Products_EquipmentType1" ManuallyRouted="false" />
+        <AssociationConnector Association="CaffeineFixModel.FK_Products_ProductCategory1" ManuallyRouted="false" />
+        <AssociationConnector Association="CaffeineFixModel.FK_Products_ProductImage1" ManuallyRouted="false" />
+        <AssociationConnector Association="CaffeineFixModel.FK_Products_RoastLevel1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
