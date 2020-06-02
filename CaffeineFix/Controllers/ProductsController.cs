@@ -25,7 +25,19 @@ namespace CaffeineFix.Controllers
 
         public JsonResult GetAllProducts(DataTablesParam param)
         {
-            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts();
+            int pageNo = 1;
+            int totalCount = 0;
+            int iDisplayLength = 0;
+
+            if (param.iDisplayStart >= param.iDisplayLength)
+            {
+                pageNo = (param.iDisplayStart / param.iDisplayLength) + 1;
+            }
+
+            totalCount = productsBusiness.CountProducts();
+            iDisplayLength = param.iDisplayLength;
+
+            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(pageNo, iDisplayLength);
 
             List<ProductViewModel> productsVMList = new List<ProductViewModel>();
 
@@ -35,8 +47,8 @@ namespace CaffeineFix.Controllers
             {
                 aaData = productsVMList,
                 sEcho = param.sEcho,
-                iTotalDisplayRecords = 3,
-                iTotalRecords = 3
+                iTotalDisplayRecords = totalCount,
+                iTotalRecords = totalCount
             }, JsonRequestBehavior.AllowGet);
         }
     }

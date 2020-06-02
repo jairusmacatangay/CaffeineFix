@@ -21,28 +21,37 @@ namespace CaffeineFix.Business
             productRepository = new ProductRepository(unitOfWork);
         }
 
-        public List<ProductDomainModel> GetAllProducts()
+        public List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength)
         {
-            List<ProductDomainModel> productsList = productRepository.GetAll().Select(m => new ProductDomainModel
-            {
-                ProductID = m.ProductID,
-                ProductName = m.ProductName,
-                ProductCategoryID = m.ProductCategoryID,
-                Description = m.Description,
-                Price = m.Price,
-                ImageID = m.ImageID,
-                RoastLevelID = m.RoastLevelID,
-                EquipmentTypeID = m.EquipmentTypeID,
-                DrinkwareTypeID = m.DrinkwareTypeID,
-                DateCreated = m.DateCreated,
-                DateLastModified = m.DateLastModified,
-                ProductCategoryName = m.ProductCategory.ProductCategoryName,
-                RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
-                EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
-                DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
-            }).ToList();
+            List<ProductDomainModel> productsList = productRepository.GetAll()
+                .OrderBy(m => m.ProductID)
+                .Skip((pageNo - 1) * iDisplayLength)
+                .Take(iDisplayLength)
+                .Select(m => new ProductDomainModel
+                {
+                    ProductID = m.ProductID,
+                    ProductName = m.ProductName,
+                    ProductCategoryID = m.ProductCategoryID,
+                    Description = m.Description,
+                    Price = m.Price,
+                    ImageID = m.ImageID,
+                    RoastLevelID = m.RoastLevelID,
+                    EquipmentTypeID = m.EquipmentTypeID,
+                    DrinkwareTypeID = m.DrinkwareTypeID,
+                    DateCreated = m.DateCreated,
+                    DateLastModified = m.DateLastModified,
+                    ProductCategoryName = m.ProductCategory.ProductCategoryName,
+                    RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
+                    EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
+                    DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
+                }).ToList();
 
             return productsList;
+        }
+
+        public int CountProducts()
+        {
+            return productRepository.GetAll().Count();
         }
     }
 }
