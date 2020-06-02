@@ -21,37 +21,86 @@ namespace CaffeineFix.Business
             productRepository = new ProductRepository(unitOfWork);
         }
 
-        public List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength)
+        public List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength, string sSearch)
         {
-            List<ProductDomainModel> productsList = productRepository.GetAll()
-                .OrderBy(m => m.ProductID)
-                .Skip((pageNo - 1) * iDisplayLength)
-                .Take(iDisplayLength)
-                .Select(m => new ProductDomainModel
-                {
-                    ProductID = m.ProductID,
-                    ProductName = m.ProductName,
-                    ProductCategoryID = m.ProductCategoryID,
-                    Description = m.Description,
-                    Price = m.Price,
-                    ImageID = m.ImageID,
-                    RoastLevelID = m.RoastLevelID,
-                    EquipmentTypeID = m.EquipmentTypeID,
-                    DrinkwareTypeID = m.DrinkwareTypeID,
-                    DateCreated = m.DateCreated,
-                    DateLastModified = m.DateLastModified,
-                    ProductCategoryName = m.ProductCategory.ProductCategoryName,
-                    RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
-                    EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
-                    DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
-                }).ToList();
+            List<ProductDomainModel> productsList = new List<ProductDomainModel>();
 
+            if (sSearch != null)
+            {
+                productsList = productRepository.GetAll()
+                    .Where(x => x.ProductName.Contains(sSearch) || 
+                    x.ProductCategory.ProductCategoryName.Contains(sSearch))
+                    .OrderBy(m => m.ProductID)
+                    .Skip((pageNo - 1) * iDisplayLength)
+                    .Take(iDisplayLength)
+                    .Select(m => new ProductDomainModel
+                    {
+                        ProductID = m.ProductID,
+                        ProductName = m.ProductName,
+                        ProductCategoryID = m.ProductCategoryID,
+                        Description = m.Description,
+                        Price = m.Price,
+                        ImageID = m.ImageID,
+                        RoastLevelID = m.RoastLevelID,
+                        EquipmentTypeID = m.EquipmentTypeID,
+                        DrinkwareTypeID = m.DrinkwareTypeID,
+                        DateCreated = m.DateCreated,
+                        DateLastModified = m.DateLastModified,
+                        ProductCategoryName = m.ProductCategory.ProductCategoryName,
+                        RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
+                        EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
+                        DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
+                    }).ToList();
+            }
+            else
+            {
+                productsList = productRepository.GetAll()
+                    .OrderBy(m => m.ProductID)
+                    .Skip((pageNo - 1) * iDisplayLength)
+                    .Take(iDisplayLength)
+                    .Select(m => new ProductDomainModel
+                    {
+                        ProductID = m.ProductID,
+                        ProductName = m.ProductName,
+                        ProductCategoryID = m.ProductCategoryID,
+                        Description = m.Description,
+                        Price = m.Price,
+                        ImageID = m.ImageID,
+                        RoastLevelID = m.RoastLevelID,
+                        EquipmentTypeID = m.EquipmentTypeID,
+                        DrinkwareTypeID = m.DrinkwareTypeID,
+                        DateCreated = m.DateCreated,
+                        DateLastModified = m.DateLastModified,
+                        ProductCategoryName = m.ProductCategory.ProductCategoryName,
+                        RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
+                        EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
+                        DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
+                    }).ToList();
+            }
             return productsList;
         }
 
-        public int CountProducts()
+        public int CountProducts(string sSearch)
         {
-            return productRepository.GetAll().Count();
+            if (sSearch != null)
+            {
+                return productRepository.GetAll()
+                    .Where(x => x.ProductName.Contains(sSearch) || 
+                    x.ProductCategory.ProductCategoryName.Contains(sSearch)).Count();
+            }
+            else
+            {
+                return productRepository.GetAll().Count();
+            }
+        }
+
+        public int GetPageNo(int iDisplayStart, int iDisplayLength)
+        {
+            if (iDisplayStart >= iDisplayLength)
+            {
+                return (iDisplayStart / iDisplayLength) + 1;
+            }
+            return 1;
         }
     }
 }

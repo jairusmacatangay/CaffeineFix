@@ -27,17 +27,15 @@ namespace CaffeineFix.Controllers
         {
             int pageNo = 1;
             int totalCount = 0;
-            int iDisplayLength = 0;
+            int iDisplayStart = param.iDisplayStart;
+            int iDisplayLength = param.iDisplayLength;
+            string sSearch = param.sSearch;
 
-            if (param.iDisplayStart >= param.iDisplayLength)
-            {
-                pageNo = (param.iDisplayStart / param.iDisplayLength) + 1;
-            }
+            pageNo = productsBusiness.GetPageNo(iDisplayStart, iDisplayLength);
 
-            totalCount = productsBusiness.CountProducts();
-            iDisplayLength = param.iDisplayLength;
+            totalCount = productsBusiness.CountProducts(sSearch);
 
-            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(pageNo, iDisplayLength);
+            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(pageNo, iDisplayLength, sSearch);
 
             List<ProductViewModel> productsVMList = new List<ProductViewModel>();
 

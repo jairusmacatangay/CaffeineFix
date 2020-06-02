@@ -9,7 +9,8 @@ namespace CaffeineFix.Business.Interface
 {
     public interface IProductsBusiness
     {
-        List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength);
-        int CountProducts();
+        List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength, string sSearch);
+        int CountProducts(string sSearch);
+        int GetPageNo(int iDisplayStart, int iDisplayLength);
     }
 }
