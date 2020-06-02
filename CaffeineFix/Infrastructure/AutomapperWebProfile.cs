@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CaffeineFix.Domain;
+using CaffeineFix.Models;
 
 namespace CaffeineFix.Infrastructure
 {
@@ -9,7 +11,8 @@ namespace CaffeineFix.Infrastructure
     {
         public AutomapperWebProfile()
         {
-
+            CreateMap<ProductDomainModel, ProductViewModel>();
+            CreateMap<ProductViewModel, ProductDomainModel>();
         }
 
         public static void Run()

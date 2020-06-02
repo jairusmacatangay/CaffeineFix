@@ -1,0 +1,95 @@
+﻿@model IEnumerable<CaffeineFix.Models.ProductViewModel>
+
+@{
+    ViewBag.Title = "Products";
+    @Styles.Render("~/Content/DataTables")
+    @Scripts.Render("~/bundles/DataTables")
+}
+
+<a href="#" class="btn btn-success btn-sm mb-3"><i class="fa fa-plus"></i> Add Product</a>
+
+<table class="display" id="myDataTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Created</th>
+            <th>Last Modified</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        BindDataTable();
+    })
+
+    function parseJsonDate(jsonDate) {
+        var offset = new Date().getTimezoneOffset() * 60000;
+        var parts = /\/Date\((-?\d+)([+-]\d{2})?(\d{2})?.*/.exec(jsonDate);
+        if (parts[2] == undefined) parts[2] = 0;
+        if (parts[3] == undefined) parts[3] = 0;
+        d = new Date(+parts[1] + offset + parts[2] * 3600000 + parts[3] * 60000);
+        date = d.getDate() + 1;
+        date = date < 10 ? "0" + date : date;
+        mon = d.getMonth() + 1;
+        mon = mon < 10 ? "0" + mon : mon;
+        year = d.getFullYear();
+        return (mon + "/" + date + "/" + year);
+    };
+
+    let BindDataTable = function (response) {
+        $("#myDataTable").DataTable({
+            "bServerSide": true,
+            "sAjaxSource": "/Products/GetAllProducts",
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    type: "GET",
+                    data: aoData,
+                    url: sSource,
+                    success: fnCallback
+                })
+            },
+            "aoColumns": [
+                { "mData": "ProductID" },
+                { "mData": "ProductName" },
+                { "mData": "ProductCategoryName" },
+                {
+                    "mData": "Price",
+                    "render": function (Price) {
+                        let price = Price.toFixed(2);
+                        return '&#8369; ' + price + '';
+                    }
+                },
+                {
+                    "mData": "DateCreated",
+                    "render": function (DateCreated) {
+                        let jsonDate = parseJsonDate(DateCreated);
+                        return '' + jsonDate + '';
+                    }
+                },
+                {
+                    "mData": "DateLastModified",
+                    "render": function (DateLastModified) {
+                        if (DateLastModified != null) {
+                            let jsonDate = parseJsonDate(DateLastModified);
+                            return '' + jsonDate + '';
+                        } else {
+                            return 'N/A';
+                        }
+                    }
+                },
+                {
+                    "render": function (type, full, meta) {
+                        return '<a href="#" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a> <a href="#" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a> <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>'
+                    }
+                }
+            ]
+        });
+    }
+</script>
+

@@ -9,7 +9,7 @@ namespace CaffeineFix
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-3.5.1.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -23,8 +23,14 @@ namespace CaffeineFix
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/font-awesome.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/DataTables").Include(
+                      "~/Scripts/DataTables/jquery.dataTables.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/DataTables").Include(
+                      "~/Content/DataTables/css/jquery.dataTables.min.css"));
         }
     }
 }

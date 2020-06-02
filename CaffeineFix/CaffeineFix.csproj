@@ -155,10 +155,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AutomapperWebProfile.cs" />
+    <Compile Include="Models\DataTablesParam.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -587,10 +590,10 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -602,6 +605,20 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CaffeineFix.Business\CaffeineFix.Business.csproj">
+      <Project>{c88ec03b-f35e-4540-90f2-d075b6f44a9a}</Project>
+      <Name>CaffeineFix.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CaffeineFix.Domain\CaffeineFix.Domain.csproj">
+      <Project>{92724b00-3b45-4c0d-b433-fed458fac849}</Project>
+      <Name>CaffeineFix.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CaffeineFix.Repository\CaffeineFix.Repository.csproj">
+      <Project>{74240459-3774-4457-8ffd-d9060289fa6a}</Project>
+      <Name>CaffeineFix.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

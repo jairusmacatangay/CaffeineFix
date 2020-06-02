@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CaffeineFixModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CaffeineFixModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DrinkwareType">
           <Key>
             <PropertyRef Name="DrinkwareTypeID" />
@@ -49,8 +49,8 @@
           <Property Name="RoastLevelID" Type="int" />
           <Property Name="EquipmentTypeID" Type="int" />
           <Property Name="DrinkwareTypeID" Type="int" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="DateLastModified" Type="datetime" />
+          <Property Name="DateCreated" Type="date" />
+          <Property Name="DateLastModified" Type="date" />
         </EntityType>
         <EntityType Name="RoastLevel">
           <Key>
@@ -147,8 +147,7 @@
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CaffeineFixModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -200,8 +199,8 @@
           <Property Name="RoastLevelID" Type="Int32" />
           <Property Name="EquipmentTypeID" Type="Int32" />
           <Property Name="DrinkwareTypeID" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="DateLastModified" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="0" />
+          <Property Name="DateLastModified" Type="DateTime" Precision="0" />
           <NavigationProperty Name="DrinkwareType" Relationship="Self.FK_Products_DrinkwareType1" FromRole="Products" ToRole="DrinkwareType" />
           <NavigationProperty Name="EquipmentType" Relationship="Self.FK_Products_EquipmentType1" FromRole="Products" ToRole="EquipmentType" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Products_ProductCategory1" FromRole="Products" ToRole="ProductCategory" />

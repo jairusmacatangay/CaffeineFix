@@ -84,6 +84,7 @@
     <Compile Include="ProductImage.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoastLevel.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
