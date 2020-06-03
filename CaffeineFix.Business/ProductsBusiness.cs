@@ -102,6 +102,31 @@ namespace CaffeineFix.Business
             }
             return 1;
         }
+
+        public List<ProductDomainModel> GetProduct(int productID)
+        {
+            List<ProductDomainModel> product = productRepository.GetAll().Where(x => x.ProductID == productID)
+                .Select(m => new ProductDomainModel
+                {
+                    ProductID = m.ProductID,
+                    ProductName = m.ProductName,
+                    ProductCategoryID = m.ProductCategoryID,
+                    Description = m.Description,
+                    Price = m.Price,
+                    ImageID = m.ImageID,
+                    RoastLevelID = m.RoastLevelID,
+                    EquipmentTypeID = m.EquipmentTypeID,
+                    DrinkwareTypeID = m.DrinkwareTypeID,
+                    DateCreated = m.DateCreated,
+                    DateLastModified = m.DateLastModified,
+                    ProductCategoryName = m.ProductCategory.ProductCategoryName,
+                    RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
+                    EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
+                    DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
+                }).ToList();
+
+            return product;
+        }
     }
 }
 

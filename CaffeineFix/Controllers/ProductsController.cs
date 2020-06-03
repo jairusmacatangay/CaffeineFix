@@ -49,5 +49,16 @@ namespace CaffeineFix.Controllers
                 iTotalRecords = totalCount
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ViewProduct(int productID)
+        {
+            List<ProductDomainModel> productDM = productsBusiness.GetProduct(productID);
+
+            List<ProductViewModel> productVM = new List<ProductViewModel>();
+
+            AutoMapper.Mapper.Map(productDM, productVM);
+
+            return PartialView("_ViewProduct", productVM);
+        }
     }
 }

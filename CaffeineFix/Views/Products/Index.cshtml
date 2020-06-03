@@ -23,6 +23,25 @@
     <tbody></tbody>
 </table>
 
+<!-- Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Modal Header-->
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> <!--End of Modal Header-->
+            <!--Modal Body-->
+            <div class="modal-body" id="viewModalBodyDiv">
+
+            </div> <!--End of Modal Body-->
+        </div>
+    </div>
+</div> <!--End of Modal-->
+
 <script>
     $(document).ready(function () {
         BindDataTable();
@@ -84,12 +103,21 @@
                     }
                 },
                 {
-                    "render": function (type, full, meta) {
-                        return '<a href="#" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a> <a href="#" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a> <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>'
+                    "mData": "ProductID",
+                    "render": function (ProductID, type, full, meta) {
+                        return '<a href="#" class="btn btn-success btn-sm" onclick="ViewProduct(' + ProductID + ')"><i class="fa fa-eye"></i></a> <a href="#" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a> <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>'
                     }
                 }
             ]
         });
+    }
+
+    let ViewProduct = function (ProductID) {
+        let url = "/Products/ViewProduct?productID=" + ProductID;
+
+        $("#viewModalBodyDiv").load(url, function () {
+            $("#viewModal").modal("show");
+        })
     }
 </script>
 

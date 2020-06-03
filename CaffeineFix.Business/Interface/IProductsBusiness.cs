@@ -12,5 +12,6 @@ namespace CaffeineFix.Business.Interface
         List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength, string sSearch);
         int CountProducts(string sSearch);
         int GetPageNo(int iDisplayStart, int iDisplayLength);
+        List<ProductDomainModel> GetProduct(int productID);
     }
 }
