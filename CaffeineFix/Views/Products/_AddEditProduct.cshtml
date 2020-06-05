@@ -1,0 +1,81 @@
+﻿@model CaffeineFix.Models.ProductViewModel
+
+<form id="myForm">
+    @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @placeholder = "Name" })
+    <br />
+    @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select Category", new { @class = "form-control" })
+    <br />
+    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Description" })
+    <br />
+    @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "Price" })
+    <br />
+    @Html.DropDownListFor(m => m.RoastLevelID, ViewBag.RoastLevelList as SelectList, "Roast Level", new { @class = "form-control" })
+    <br />
+    @Html.DropDownListFor(m => m.EquipmentTypeID, ViewBag.EquipmentTypeList as SelectList, "Equipment Type", new { @class = "form-control" })
+    <br />
+    @Html.DropDownListFor(m => m.DrinkwareTypeID, ViewBag.DrinkwareTypeList as SelectList, "Drinkware Type", new { @class = "form-control" })
+    <br />
+    <a href="#" id="btnSubmit" class="btn btn-primary btn-block">
+        @if (Model.ProductID == 0)
+        {
+            <span>Add</span>
+        }
+        else
+        {
+            <span>Update</span>
+        }
+    </a>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#ProductCategoryID").change(function () {
+            let productCategoryID = $(this).val();
+
+
+            if (productCategoryID == 1) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Products/GetRoastLevelList?productCategoryID=" + productCategoryID,
+                    contentType: "html",
+                    success: function (response) {
+                        $("#RoastLevelID").empty();
+                        $("#RoastLevelID").append(response);
+                        $("#EquipmentTypeID").empty();
+                        $("#EquipmentTypeID").append("<option value=''>N/A</option>");
+                        $("#DrinkwareTypeID").empty();
+                        $("#DrinkwareTypeID").append("<option value=''>N/A</option>");
+                    }
+                })
+            } else if (productCategoryID == 2) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Products/GetEquipmentTypeList?productCategoryID=" + productCategoryID,
+                    contentType: "html",
+                    success: function (response) {
+                        $("#EquipmentTypeID").empty();
+                        $("#EquipmentTypeID").append(response);
+                        $("#RoastLevelID").empty();
+                        $("#RoastLevelID").append("<option value=''>N/A</option>");
+                        $("#DrinkwareTypeID").empty();
+                        $("#DrinkwareTypeID").append("<option value=''>N/A</option>");
+                    }
+                })
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Products/GetDrinkwareTypeList?productCategoryID=" + productCategoryID,
+                    contentType: "html",
+                    success: function (response) {
+                        $("#DrinkwareTypeID").empty();
+                        $("#DrinkwareTypeID").append(response);
+                        $("#RoastLevelID").empty();
+                        $("#RoastLevelID").append("<option value=''>N/A</option>");
+                        $("#EquipmentTypeID").empty();
+                        $("#EquipmentTypeID").append("<option value=''>N/A</option>");
+                    }
+                })
+            }
+        })
+    })
+</script>

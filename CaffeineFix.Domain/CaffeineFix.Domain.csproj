@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrinkwareTypeDomainModel.cs" />
+    <Compile Include="EquipmentTypeDomainModel.cs" />
+    <Compile Include="ProductCategoryDomainModel.cs" />
     <Compile Include="ProductDomainModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoastLevelDomainModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

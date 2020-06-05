@@ -68,9 +68,11 @@
     <Compile Include="DrinkwareType.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="DrinkwareTypeRepository.cs" />
     <Compile Include="EquipmentType.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="EquipmentTypeRepository.cs" />
     <Compile Include="Infrastructure\BaseRepository.cs" />
     <Compile Include="Infrastructure\Contract\IBaseRepository.cs" />
     <Compile Include="Infrastructure\Contract\IUnitOfWork.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="ProductCategory.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProductCategoryRepository.cs" />
     <Compile Include="ProductImage.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
     </Compile>
@@ -89,6 +92,7 @@
     <Compile Include="RoastLevel.cs">
       <DependentUpon>CaffeineFixEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="RoastLevelRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="CaffeineFixEntities.edmx">
