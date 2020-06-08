@@ -592,13 +592,13 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\_ViewProduct.cshtml" />
-    <Content Include="Views\Products\_AddEditProduct.cshtml" />
     <Content Include="Views\Products\_SubCategoryOptions.cshtml" />
     <Content Include="Views\Products\_AddProductForm.cshtml" />
     <Content Include="Views\Products\_EditProductForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ProductsImage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

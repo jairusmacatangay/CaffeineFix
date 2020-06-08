@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CaffeineFix.Domain
 {
@@ -24,5 +25,7 @@ namespace CaffeineFix.Domain
         public string RoastLevelLabel { get; set; }
         public string EquipmentTypeLabel { get; set; }
         public string DrinkwareTypeLabel { get; set; }
+
+        public HttpPostedFileWrapper ImageFile { get; set; }
     }
 }

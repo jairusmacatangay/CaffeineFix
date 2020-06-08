@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -92,9 +93,65 @@ namespace CaffeineFix.Controllers
 
         public void AddProduct(ProductViewModel productVM)
         {
+            int imageID = 0;
+
+            if (productVM.ImageFile != null)
+            {
+                string filePath = string.Empty;
+                string fileContentType = string.Empty;
+
+                byte[] uploadedFile = new byte[productVM.ImageFile.InputStream.Length];
+                productVM.ImageFile.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+
+                fileContentType = productVM.ImageFile.ContentType;
+                string folderPath = "/ProductsImage/";
+                this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, productVM.ImageFile.FileName);
+                filePath = folderPath + productVM.ImageFile.FileName;
+
+                ProductImageDomainModel img = new ProductImageDomainModel();
+
+                img.ImageName = productVM.ImageFile.FileName;
+                img.ImageByte = uploadedFile;
+                img.ImagePath = filePath;
+                img.ImageExt = fileContentType;
+                img.IsDeleted = false;
+
+                productsBusiness.SaveImageData(img);
+
+                imageID = productsBusiness.GetRecentImageID();
+            }
+
+            productVM.ImageID = imageID;
+            
             ProductDomainModel productDM = new ProductDomainModel();
             AutoMapper.Mapper.Map(productVM, productDM);
             productsBusiness.AddProduct(productDM);            
+        }
+
+        private void WriteBytesToFile(string rootFolderPath, byte[] fileBytes, string fileName)
+        {
+            if (!Directory.Exists(rootFolderPath))
+            {
+                string fullFolderPath = rootFolderPath;
+                string folderPath = new Uri(fullFolderPath).LocalPath;
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string fullFilePath = rootFolderPath + fileName;
+
+            FileStream fs = System.IO.File.Create(fullFilePath);
+
+            fs.Flush();
+            fs.Dispose();
+            fs.Close();
+
+            BinaryWriter sw = new BinaryWriter(new FileStream(fullFilePath, FileMode.Create, FileAccess.Write));
+
+            sw.Write(fileBytes);
+
+            sw.Flush();
+            sw.Dispose();
+            sw.Close();
         }
 
         public void UpdateProduct(ProductViewModel productVM)

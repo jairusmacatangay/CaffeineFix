@@ -25,6 +25,7 @@ namespace CaffeineFix.Repository
         public byte[] ImageByte { get; set; }
         public string ImagePath { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public string ImageExt { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

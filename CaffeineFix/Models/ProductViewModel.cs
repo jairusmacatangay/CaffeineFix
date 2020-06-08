@@ -23,5 +23,7 @@ namespace CaffeineFix.Models
         public string RoastLevelLabel { get; set; }
         public string EquipmentTypeLabel { get; set; }
         public string DrinkwareTypeLabel { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using CaffeineFix.Domain;
 
 namespace CaffeineFix.Business.Interface
@@ -20,5 +21,7 @@ namespace CaffeineFix.Business.Interface
         List<DrinkwareTypeDomainModel> GetDrinkwareTypesList(int productCategoryID);
         void AddProduct(ProductDomainModel productDM);
         void UpdateProduct(ProductDomainModel productDM);
+        void SaveImageData(ProductImageDomainModel modelDM);
+        int GetRecentImageID();
     }
 }

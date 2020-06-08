@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using CaffeineFix.Business.Interface;
 using CaffeineFix.Domain;
 using CaffeineFix.Repository;
@@ -18,6 +19,7 @@ namespace CaffeineFix.Business
         private readonly RoastLevelRepository roastLevelRepository;
         private readonly EquipmentTypeRepository equipmentTypeRepository;
         private readonly DrinkwareTypeRepository drinkwareTypeRepository;
+        private readonly ProductImageRepository productImageRepository;
 
         public ProductsBusiness(IUnitOfWork _unitOfWork)
         {
@@ -27,6 +29,7 @@ namespace CaffeineFix.Business
             roastLevelRepository = new RoastLevelRepository(unitOfWork);
             equipmentTypeRepository = new EquipmentTypeRepository(unitOfWork);
             drinkwareTypeRepository = new DrinkwareTypeRepository(unitOfWork);
+            productImageRepository = new ProductImageRepository(unitOfWork);
         }
 
         public List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength, string sSearch)
@@ -256,6 +259,7 @@ namespace CaffeineFix.Business
             product.ProductName = productDM.ProductName;
             product.ProductCategoryID = productDM.ProductCategoryID;
             product.Description = productDM.Description;
+            product.ImageID = productDM.ImageID;
             product.Price = productDM.Price;
 
             if (productDM.RoastLevelID != null) { product.RoastLevelID = productDM.RoastLevelID; }
@@ -290,6 +294,24 @@ namespace CaffeineFix.Business
 
             product.DateLastModified = DateTime.Now;
             productRepository.Update(product);
+        }
+
+        public void SaveImageData(ProductImageDomainModel modelDM)
+        {
+            ProductImage img = new ProductImage();
+
+            img.ImageName = modelDM.ImageName;
+            img.ImageByte = modelDM.ImageByte;
+            img.ImagePath = modelDM.ImagePath;
+            img.IsDeleted = modelDM.IsDeleted;
+            img.ImageExt = modelDM.ImageExt;
+
+            productImageRepository.Insert(img);
+        }
+
+        public int GetRecentImageID()
+        {
+            return productImageRepository.GetAll().Select(x => x.ImageID).LastOrDefault();
         }
     }
 }

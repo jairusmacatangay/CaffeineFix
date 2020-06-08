@@ -30,11 +30,12 @@
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ImageName" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ImageByte" Type="image" />
+          <Property Name="ImageExt" Type="nvarchar" MaxLength="1000" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ImageByte" Type="image" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -185,6 +186,7 @@
           <Property Name="ImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_ProductImage1" FromRole="ProductImage" ToRole="Products" />
+          <Property Name="ImageExt" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -336,6 +338,7 @@
           <EntitySetMapping Name="ProductImages">
             <EntityTypeMapping TypeName="CaffeineFixModel.ProductImage">
               <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="ImageExt" ColumnName="ImageExt" />
                 <ScalarProperty Name="ImageID" ColumnName="ImageID" />
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="ImageByte" ColumnName="ImageByte" />
