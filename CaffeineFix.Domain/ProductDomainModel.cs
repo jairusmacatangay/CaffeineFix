@@ -27,5 +27,10 @@ namespace CaffeineFix.Domain
         public string DrinkwareTypeLabel { get; set; }
 
         public HttpPostedFileWrapper ImageFile { get; set; }
+
+        public string ImagePath { get; set; }
+        public string ImageSize { get; set; }
+        public Nullable<int> ImageHeight { get; set; }
+        public Nullable<int> ImageWidth { get; set; }
     }
 }

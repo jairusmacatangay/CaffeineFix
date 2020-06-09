@@ -1,6 +1,7 @@
 ﻿@model CaffeineFix.Models.ProductViewModel
 
-<form id="editForm">
+<form id="editForm" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
 
     <div class="row">
         <div class="col-6">
@@ -14,18 +15,6 @@
             <div class="form-group">
                 <label for="ProductCategoryID">Category</label>
                 @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control" })
-            </div>
-            <!--Product Description-->
-            <div class="form-group">
-                <label for="Description">Description</label>
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="col-6">
-            <!--Price-->
-            <div class="form-group">
-                <label for="Price">Price</label>
-                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
             </div>
             <!--Sub-Category-->
             <div class="form-group">
@@ -48,12 +37,38 @@
                     @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
                     @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
                 }
-
             </div>
-            <a href="#" id="btnSubmit" class="btn btn-primary">Update</a>
+            <!--Price-->
+            <div class="form-group">
+                <label for="Price">Price</label>
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+            </div>
+            <!--Product Description-->
+            <div class="form-group">
+                <label for="Description">Description</label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-6">
+            <!--Image Upload-->
+            @Html.HiddenFor(m => m.ImageID)
+            <div class="form-group">
+                <label>Image</label>
+                <br />
+                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "imgBrowse" })
+                <small class="form-text text-muted">Upload new image to replace current image</small>
+            </div>
+            <!--Image Preview-->
+            <div id="imgPreview" class="img-thumbnail">
+                <img src="@Model.ImagePath" class="img-fluid" id="targetImg" />
+                <div class="figure-caption">
+                    <a href="#" id="clearPreviewImg"><i class="fa fa-trash"></i></a>
+                    <span id="description">Size: @Model.ImageSize, @Model.ImageHeight x @Model.ImageWidth</span>
+                </div>
+            </div>
         </div>
     </div>
-
+    <a href="#" id="btnSubmit" class="btn btn-primary">Update</a>
 </form>
 
 <script>
@@ -117,17 +132,76 @@
         })
 
         $("#btnSubmit").click(function () {
-            let formData = $("#editForm").serialize();
+            let productID = $("#ProductID").val();
+            let name = $("#ProductName").val();
+            let category = $("#ProductCategoryID").val();
+            let roastLevel = $("#RoastLevelID").val();
+            let equipmentType = $("#EquipmentTypeID").val();
+            let drinkwareType = $("#DrinkwareTypeID").val();
+            let price = $("#Price").val();
+            let description = $("#Description").val();
+            let imageID = $("#ImageID").val();
+            let file = $("#imgBrowse").get(0).files;
+
+            let formData = new FormData;
+            formData.append("ProductID", productID);
+            formData.append("ProductName", name);
+            formData.append("ProductCategoryID", category);
+            formData.append("RoastLevelID", roastLevel);
+            formData.append("EquipmentTypeID", equipmentType);
+            formData.append("DrinkwareTypeID", drinkwareType);
+            formData.append("Price", price);
+            formData.append("Description", description);
+            formData.append("ImageID", imageID);
+            formData.append("ImageFile", file[0]);
 
             $.ajax({
                 type: "POST",
                 url: "/Products/UpdateProduct",
                 data: formData,
+                processData: false,
+                contentType: false,
                 success: function () {
+                    clearPreview();
                     $("#editModal").modal("hide");
                     window.location.href = "/Products/Index";
                 }
             })
         })
+
+        $("#imgBrowse").change(function () {
+            var File = this.files;
+
+            if (File && File[0]) {
+                readImage(File[0]);
+            }
+        })
+
+        let readImage = function (file) {
+            var reader = new FileReader;
+            var image = new Image;
+
+            reader.readAsDataURL(file);
+            reader.onload = function (_file) {
+                image.src = _file.target.result;
+                image.onload = function () {
+                    var height = this.height;
+                    var width = this.width;
+                    var size = ~~(file.size / 1024) + "KB";
+
+                    $("#targetImg").attr('src', _file.target.result);
+                    $("#description").text("Size: " + size + ", " + height + " x " + width + "");
+                    $("#imgPreview").show();
+                }
+            }
+        }
+
+        let clearPreview = function () {
+            $("#imgBrowse").val('');
+            $("#description").text('');
+            $("#imgPreview").hide();
+        }
+
+        document.getElementById("clearPreviewImg").addEventListener("click", clearPreview, false);
     })
 </script>

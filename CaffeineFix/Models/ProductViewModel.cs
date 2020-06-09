@@ -25,5 +25,10 @@ namespace CaffeineFix.Models
         public string DrinkwareTypeLabel { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }
+
+        public string ImagePath { get; set; }
+        public string ImageSize { get; set; }
+        public Nullable<int> ImageHeight { get; set; }
+        public Nullable<int> ImageWidth { get; set; }
     }
 }

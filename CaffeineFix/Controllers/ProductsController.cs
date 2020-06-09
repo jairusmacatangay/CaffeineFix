@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -108,6 +109,15 @@ namespace CaffeineFix.Controllers
                 this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, productVM.ImageFile.FileName);
                 filePath = folderPath + productVM.ImageFile.FileName;
 
+                string fullFilePath = "C:/Users/Jairus Macatangay/source/repos/CaffeineFix/CaffeineFix" + filePath;
+
+                FileInfo fi = new FileInfo(fullFilePath);
+                string imgSize = (fi.Length / 1024) + " KB";
+
+                Bitmap bitmap = new Bitmap(fullFilePath);
+                int imgHeight = bitmap.Height;
+                int imgWidth = bitmap.Width;
+
                 ProductImageDomainModel img = new ProductImageDomainModel();
 
                 img.ImageName = productVM.ImageFile.FileName;
@@ -115,7 +125,10 @@ namespace CaffeineFix.Controllers
                 img.ImagePath = filePath;
                 img.ImageExt = fileContentType;
                 img.IsDeleted = false;
-
+                img.ImageSize = imgSize;
+                img.ImageHeight = imgHeight;
+                img.ImageWidth = imgWidth;
+                
                 productsBusiness.SaveImageData(img);
 
                 imageID = productsBusiness.GetRecentImageID();
@@ -156,6 +169,43 @@ namespace CaffeineFix.Controllers
 
         public void UpdateProduct(ProductViewModel productVM)
         {
+            if (productVM.ImageFile != null)
+            {
+                string filePath = string.Empty;
+                string fileContentType = string.Empty;
+
+                byte[] uploadedFile = new byte[productVM.ImageFile.InputStream.Length];
+                productVM.ImageFile.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
+
+                fileContentType = productVM.ImageFile.ContentType;
+                string folderPath = "/ProductsImage/";
+                this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, productVM.ImageFile.FileName);
+                filePath = folderPath + productVM.ImageFile.FileName;
+
+                string fullFilePath = "C:/Users/Jairus Macatangay/source/repos/CaffeineFix/CaffeineFix" + filePath;
+
+                FileInfo fi = new FileInfo(fullFilePath);
+                string imgSize = (fi.Length / 1024) + " KB";
+
+                Bitmap bitmap = new Bitmap(fullFilePath);
+                int imgHeight = bitmap.Height;
+                int imgWidth = bitmap.Width;
+
+                ProductImageDomainModel img = new ProductImageDomainModel();
+
+                img.ImageID = (int)productVM.ImageID;
+                img.ImageName = productVM.ImageFile.FileName;
+                img.ImageByte = uploadedFile;
+                img.ImagePath = filePath;
+                img.ImageExt = fileContentType;
+                img.IsDeleted = false;
+                img.ImageSize = imgSize;
+                img.ImageHeight = imgHeight;
+                img.ImageWidth = imgWidth;
+
+                productsBusiness.SaveImageData(img);
+            }
+
             ProductDomainModel productDM = new ProductDomainModel();
             AutoMapper.Mapper.Map(productVM, productDM);
             productsBusiness.UpdateProduct(productDM);

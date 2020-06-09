@@ -164,6 +164,11 @@ namespace CaffeineFix.Business
                 model.ProductCategoryID = product.ProductCategoryID;
                 model.Description = product.Description;
                 model.Price = product.Price;
+                model.ImageID = product.ImageID;
+                model.ImagePath = product.ProductImage.ImagePath;
+                model.ImageSize = product.ProductImage.ImageSize;
+                model.ImageHeight = product.ProductImage.ImageHeight;
+                model.ImageWidth = product.ProductImage.ImageWidth;
                 model.RoastLevelID = product.RoastLevelID;
                 model.EquipmentTypeID = product.EquipmentTypeID;
                 model.DrinkwareTypeID = product.DrinkwareTypeID;
@@ -268,7 +273,7 @@ namespace CaffeineFix.Business
             if (productDM.EquipmentTypeID != null) { product.EquipmentTypeID = productDM.EquipmentTypeID; }
             else { product.EquipmentTypeID = 0; }
 
-            if (product.DrinkwareTypeID != null) { product.DrinkwareTypeID = productDM.DrinkwareTypeID; }
+            if (productDM.DrinkwareTypeID != null) { product.DrinkwareTypeID = productDM.DrinkwareTypeID; }
             else { product.DrinkwareTypeID = 0; }          
             
             product.DateCreated = DateTime.Now;
@@ -281,6 +286,7 @@ namespace CaffeineFix.Business
             product.ProductName = productDM.ProductName;
             product.ProductCategoryID = productDM.ProductCategoryID;
             product.Description = productDM.Description;
+            product.ImageID = productDM.ImageID;
             product.Price = productDM.Price;
 
             if (productDM.RoastLevelID != null) { product.RoastLevelID = productDM.RoastLevelID; }
@@ -298,15 +304,38 @@ namespace CaffeineFix.Business
 
         public void SaveImageData(ProductImageDomainModel modelDM)
         {
-            ProductImage img = new ProductImage();
+            ProductImage img;
 
-            img.ImageName = modelDM.ImageName;
-            img.ImageByte = modelDM.ImageByte;
-            img.ImagePath = modelDM.ImagePath;
-            img.IsDeleted = modelDM.IsDeleted;
-            img.ImageExt = modelDM.ImageExt;
+            if (modelDM.ImageID > 0)
+            {
+                img = productImageRepository.SingleOrDefault(x => x.ImageID == modelDM.ImageID);
 
-            productImageRepository.Insert(img);
+                img.ImageName = modelDM.ImageName;
+                img.ImageByte = modelDM.ImageByte;
+                img.ImagePath = modelDM.ImagePath;
+                img.IsDeleted = modelDM.IsDeleted;
+                img.ImageExt = modelDM.ImageExt;
+                img.ImageSize = modelDM.ImageSize;
+                img.ImageHeight = modelDM.ImageHeight;
+                img.ImageWidth = modelDM.ImageWidth;
+
+                productImageRepository.Update(img);
+            }
+            else
+            {
+                img = new ProductImage();
+
+                img.ImageName = modelDM.ImageName;
+                img.ImageByte = modelDM.ImageByte;
+                img.ImagePath = modelDM.ImagePath;
+                img.IsDeleted = modelDM.IsDeleted;
+                img.ImageExt = modelDM.ImageExt;
+                img.ImageSize = modelDM.ImageSize;
+                img.ImageHeight = modelDM.ImageHeight;
+                img.ImageWidth = modelDM.ImageWidth;
+
+                productImageRepository.Insert(img);
+            }            
         }
 
         public int GetRecentImageID()

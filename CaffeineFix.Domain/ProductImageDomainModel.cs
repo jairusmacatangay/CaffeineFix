@@ -14,5 +14,8 @@ namespace CaffeineFix.Domain
         public string ImagePath { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string ImageExt { get; set; }
+        public string ImageSize { get; set; }
+        public Nullable<int> ImageHeight { get; set; }
+        public Nullable<int> ImageWidth { get; set; }
     }
 }
