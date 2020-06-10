@@ -23,5 +23,6 @@ namespace CaffeineFix.Business.Interface
         void UpdateProduct(ProductDomainModel productDM);
         void SaveImageData(ProductImageDomainModel modelDM);
         int GetRecentImageID();
+        bool DeleteProduct(int productID);
     }
 }

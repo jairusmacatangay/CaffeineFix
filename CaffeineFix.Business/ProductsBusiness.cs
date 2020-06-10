@@ -39,8 +39,8 @@ namespace CaffeineFix.Business
             if (sSearch != null)
             {
                 productsList = productRepository.GetAll()
-                    .Where(x => x.ProductName.Contains(sSearch) ||
-                    x.ProductCategory.ProductCategoryName.Contains(sSearch))
+                    .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(sSearch.ToLower()) ||
+                    x.ProductCategory.ProductCategoryName.ToLower().Contains(sSearch.ToLower()))
                     .OrderBy(m => m.ProductID)
                     .Skip((pageNo - 1) * iDisplayLength)
                     .Take(iDisplayLength)
@@ -66,6 +66,7 @@ namespace CaffeineFix.Business
             else
             {
                 productsList = productRepository.GetAll()
+                    .Where(x => x.IsDeleted == false)
                     .OrderBy(m => m.ProductID)
                     .Skip((pageNo - 1) * iDisplayLength)
                     .Take(iDisplayLength)
@@ -96,12 +97,12 @@ namespace CaffeineFix.Business
             if (sSearch != null)
             {
                 return productRepository.GetAll()
-                    .Where(x => x.ProductName.Contains(sSearch) ||
-                    x.ProductCategory.ProductCategoryName.Contains(sSearch)).Count();
+                    .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(sSearch.ToLower()) ||
+                    x.ProductCategory.ProductCategoryName.ToLower().Contains(sSearch.ToLower())).Count();
             }
             else
             {
-                return productRepository.GetAll().Count();
+                return productRepository.GetAll().Where(x => x.IsDeleted == false).Count();
             }
         }
 
@@ -277,6 +278,7 @@ namespace CaffeineFix.Business
             else { product.DrinkwareTypeID = 0; }          
             
             product.DateCreated = DateTime.Now;
+            product.IsDeleted = false;
             productRepository.Insert(product);
         }
 
@@ -341,6 +343,21 @@ namespace CaffeineFix.Business
         public int GetRecentImageID()
         {
             return productImageRepository.GetAll().Select(x => x.ImageID).LastOrDefault();
+        }
+
+        public bool DeleteProduct(int productID)
+        {
+            bool result = false;
+
+            Product product = productRepository.SingleOrDefault(x => x.IsDeleted == false && x.ProductID == productID);
+            if (product != null)
+            {
+                product.IsDeleted = true;
+                productRepository.Update(product);
+                result = true;
+            }
+
+            return result;
         }
     }
 }

@@ -55,6 +55,7 @@
           <Property Name="DrinkwareTypeID" Type="int" />
           <Property Name="DateCreated" Type="date" />
           <Property Name="DateLastModified" Type="date" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="RoastLevel">
           <Key>
@@ -214,6 +215,7 @@
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Products_ProductCategory1" FromRole="Products" ToRole="ProductCategory" />
           <NavigationProperty Name="ProductImage" Relationship="Self.FK_Products_ProductImage1" FromRole="Products" ToRole="ProductImage" />
           <NavigationProperty Name="RoastLevel" Relationship="Self.FK_Products_RoastLevel1" FromRole="Products" ToRole="RoastLevel" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="RoastLevel">
           <Key>
@@ -359,6 +361,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="CaffeineFixModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />

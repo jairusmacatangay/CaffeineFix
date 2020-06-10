@@ -234,5 +234,11 @@ namespace CaffeineFix.Controllers
 
             return PartialView("_SubCategoryOptions");
         }
+
+        public JsonResult DeleteProduct(int productID)
+        {
+            bool result = productsBusiness.DeleteProduct(productID);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

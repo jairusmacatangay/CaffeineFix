@@ -18,6 +18,7 @@ namespace CaffeineFix.Models
         public Nullable<int> DrinkwareTypeID { get; set; }
         public Nullable<DateTime> DateCreated { get; set; }
         public Nullable<DateTime> DateLastModified { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
 
         public string ProductCategoryName { get; set; }
         public string RoastLevelLabel { get; set; }

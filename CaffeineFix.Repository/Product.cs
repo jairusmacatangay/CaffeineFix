@@ -25,6 +25,7 @@ namespace CaffeineFix.Repository
         public Nullable<int> DrinkwareTypeID { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateLastModified { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
         public virtual DrinkwareType DrinkwareType { get; set; }
         public virtual EquipmentType EquipmentType { get; set; }
