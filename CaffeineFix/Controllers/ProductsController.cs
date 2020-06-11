@@ -26,19 +26,24 @@ namespace CaffeineFix.Controllers
             return View();
         }
 
-        public JsonResult GetAllProducts(DataTablesParam param)
+        public JsonResult GetAllProducts()
         {
+            string search = Request.Form.GetValues("search[value]")[0];
+            string draw = Request.Form.GetValues("draw")[0];
+            string order = Request.Form.GetValues("order[0][column]")[0];
+            string orderDir = Request.Form.GetValues("order[0][dir]")[0];
+            int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
+            int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             int pageNo = 1;
             int totalCount = 0;
-            int iDisplayStart = param.iDisplayStart;
-            int iDisplayLength = param.iDisplayLength;
-            string sSearch = param.sSearch;
+            
+            pageNo = productsBusiness.GetPageNo(startRec, pageSize);
 
-            pageNo = productsBusiness.GetPageNo(iDisplayStart, iDisplayLength);
+            totalCount = productsBusiness.CountProducts(search);
 
-            totalCount = productsBusiness.CountProducts(sSearch);
+            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(pageNo, pageSize, search);
 
-            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(pageNo, iDisplayLength, sSearch);
+            productsDMList = productsBusiness.SortByColumnWithOrder(order, orderDir, productsDMList);
 
             List<ProductViewModel> productsVMList = new List<ProductViewModel>();
 
@@ -46,10 +51,10 @@ namespace CaffeineFix.Controllers
 
             return Json(new
             {
-                aaData = productsVMList,
-                sEcho = param.sEcho,
-                iTotalDisplayRecords = totalCount,
-                iTotalRecords = totalCount
+                draw = Convert.ToInt32(draw),
+                recordsTotal = totalCount,
+                recordsFiltered = totalCount,
+                data = productsVMList
             }, JsonRequestBehavior.AllowGet);
         }
 

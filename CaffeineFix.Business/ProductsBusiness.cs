@@ -32,18 +32,18 @@ namespace CaffeineFix.Business
             productImageRepository = new ProductImageRepository(unitOfWork);
         }
 
-        public List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength, string sSearch)
+        public List<ProductDomainModel> GetAllProducts(int pageNo, int pageSize, string search)
         {
             List<ProductDomainModel> productsList = new List<ProductDomainModel>();
 
-            if (sSearch != null)
+            if (search != null)
             {
-                productsList = productRepository.GetAll()
-                    .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(sSearch.ToLower()) ||
-                    x.ProductCategory.ProductCategoryName.ToLower().Contains(sSearch.ToLower()))
+                productsList = productRepository.GetAll(x => x.IsDeleted == false)
+                    .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(search.ToLower()) ||
+                    x.ProductCategory.ProductCategoryName.ToLower().Contains(search.ToLower()))
                     .OrderBy(m => m.ProductID)
-                    .Skip((pageNo - 1) * iDisplayLength)
-                    .Take(iDisplayLength)
+                    .Skip((pageNo - 1) * pageSize)
+                    .Take(pageSize)
                     .Select(m => new ProductDomainModel
                     {
                         ProductID = m.ProductID,
@@ -60,16 +60,17 @@ namespace CaffeineFix.Business
                         ProductCategoryName = m.ProductCategory.ProductCategoryName,
                         RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
                         EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
-                        DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
+                        DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel,
+                        IsDeleted = m.IsDeleted
                     }).ToList();
             }
             else
             {
-                productsList = productRepository.GetAll()
+                productsList = productRepository.GetAll(x => x.IsDeleted == false)
                     .Where(x => x.IsDeleted == false)
                     .OrderBy(m => m.ProductID)
-                    .Skip((pageNo - 1) * iDisplayLength)
-                    .Take(iDisplayLength)
+                    .Skip((pageNo - 1) * pageSize)
+                    .Take(pageSize)
                     .Select(m => new ProductDomainModel
                     {
                         ProductID = m.ProductID,
@@ -86,31 +87,80 @@ namespace CaffeineFix.Business
                         ProductCategoryName = m.ProductCategory.ProductCategoryName,
                         RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
                         EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
-                        DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
+                        DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel,
+                        IsDeleted = m.IsDeleted
                     }).ToList();
             }
+
             return productsList;
         }
 
-        public int CountProducts(string sSearch)
+        public List<ProductDomainModel> SortByColumnWithOrder(string order, string orderDir,
+            List<ProductDomainModel> productsDMList)
         {
-            if (sSearch != null)
+            List<ProductDomainModel> list = new List<ProductDomainModel>();
+
+            switch (order)
             {
-                return productRepository.GetAll()
-                    .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(sSearch.ToLower()) ||
-                    x.ProductCategory.ProductCategoryName.ToLower().Contains(sSearch.ToLower())).Count();
+                case "0":
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? 
+                        productsDMList.OrderByDescending(x => x.ProductID).ToList() : 
+                        productsDMList.OrderBy(x => x.ProductID).ToList();
+                    break;
+                case "1":
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ?
+                        productsDMList.OrderByDescending(x => x.ProductName).ToList() :
+                        productsDMList.OrderBy(x => x.ProductName).ToList();
+                    break;
+                case "2":
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ?
+                        productsDMList.OrderByDescending(x => x.ProductCategoryName).ToList() :
+                        productsDMList.OrderBy(x => x.ProductCategoryName).ToList();
+                    break;
+                case "3":
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ?
+                        productsDMList.OrderByDescending(x => x.Price).ToList() :
+                        productsDMList.OrderBy(x => x.Price).ToList();
+                    break;
+                case "4":
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ?
+                        productsDMList.OrderByDescending(x => x.DateCreated).ToList() :
+                        productsDMList.OrderBy(x => x.DateCreated).ToList();
+                    break;
+                case "5":
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ?
+                        productsDMList.OrderByDescending(x => x.DateLastModified).ToList() :
+                        productsDMList.OrderBy(x => x.DateLastModified).ToList();
+                    break;
+                default:
+                    list = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ?
+                        productsDMList.OrderByDescending(x => x.ProductID).ToList() :
+                        productsDMList.OrderBy(x => x.ProductID).ToList();
+                    break;
+            }
+
+            return list;
+        }
+
+        public int CountProducts(string search)
+        {
+            if (search != null)
+            {
+                return productRepository.GetAll(x => x.IsDeleted == false)
+                    .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(search.ToLower()) ||
+                    x.ProductCategory.ProductCategoryName.ToLower().Contains(search.ToLower())).Count();
             }
             else
             {
-                return productRepository.GetAll().Where(x => x.IsDeleted == false).Count();
+                return productRepository.GetAll(x => x.IsDeleted == false).Where(x => x.IsDeleted == false).Count();
             }
         }
 
-        public int GetPageNo(int iDisplayStart, int iDisplayLength)
+        public int GetPageNo(int startRec, int pageSize)
         {
-            if (iDisplayStart >= iDisplayLength)
+            if (startRec >= pageSize)
             {
-                return (iDisplayStart / iDisplayLength) + 1;
+                return (startRec / pageSize) + 1;
             }
             return 1;
         }

@@ -10,9 +10,10 @@ namespace CaffeineFix.Business.Interface
 {
     public interface IProductsBusiness
     {
-        List<ProductDomainModel> GetAllProducts(int pageNo, int iDisplayLength, string sSearch);
-        int CountProducts(string sSearch);
-        int GetPageNo(int iDisplayStart, int iDisplayLength);
+        List<ProductDomainModel> GetAllProducts(int pageNo, int pageSize, string search);
+        List<ProductDomainModel> SortByColumnWithOrder(string order, string orderDir, List<ProductDomainModel> productsDMList);
+        int CountProducts(string search);
+        int GetPageNo(int startRec, int pageSize);
         List<ProductDomainModel> GetProduct(int productID);
         List<ProductCategoryDomainModel> GetCategories();
         ProductDomainModel GetProductForEdit(int productID);

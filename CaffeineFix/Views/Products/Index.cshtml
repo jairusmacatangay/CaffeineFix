@@ -79,7 +79,6 @@
         </div>
     </div>
 </div> <!--End of Modal-->
-
 <!-- Modal for Delete Product -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -122,39 +121,40 @@
         return (mon + "/" + date + "/" + year);
     };
 
-    let BindDataTable = function (response) {
-        let productID;
+    let BindDataTable = function () {
         $("#myDataTable").DataTable({
-            "bServerSide": true,
-            "sAjaxSource": "/Products/GetAllProducts",
-            "fnServerData": function (sSource, aoData, fnCallback) {
-                $.ajax({
-                    type: "GET",
-                    data: aoData,
-                    url: sSource,
-                    success: fnCallback
-                })
-            },
-            "aoColumns": [
-                { "mData": "ProductID" },
-                { "mData": "ProductName" },
-                { "mData": "ProductCategoryName" },
+            "columnDefs": [
                 {
-                    "mData": "Price",
+                    "targets": [6],
+                    "orderable": false
+                }
+            ],
+            "serverSide": true,
+            "ajax": {
+                url: "/Products/GetAllProducts",
+                type: "POST",
+                dataType: "JSON"
+            },
+            "columns": [
+                { "data": "ProductID" },
+                { "data": "ProductName" },
+                { "data": "ProductCategoryName" },
+                {
+                    "data": "Price",
                     "render": function (Price) {
                         let price = Price.toFixed(2);
                         return '&#8369; ' + price + '';
                     }
                 },
                 {
-                    "mData": "DateCreated",
+                    "data": "DateCreated",
                     "render": function (DateCreated) {
                         let jsonDate = parseJsonDate(DateCreated);
                         return '' + jsonDate + '';
                     }
                 },
                 {
-                    "mData": "DateLastModified",
+                    "data": "DateLastModified",
                     "render": function (DateLastModified) {
                         if (DateLastModified != null) {
                             let jsonDate = parseJsonDate(DateLastModified);
@@ -165,14 +165,14 @@
                     }
                 },
                 {
-                    "mData": "ProductID",
-                    "render": function (ProductID, type, full, meta) {
+                    "data" : "ProductID",
+                    "render": function (ProductID) {
                         return '<a href="#" class="btn btn-success btn-sm" onclick="ViewProduct(' + ProductID + ')"><i class="fa fa-eye"></i></a> <a href="#" class="btn btn-success btn-sm" onclick="LoadEditProductForm(' + ProductID + ')"><i class="fa fa-pencil"></i></a> <a href="#" class="btn btn-danger btn-sm" onclick="LoadDeleteModal(' + ProductID + ')"><i class="fa fa-trash"></i></a>'
                     }
                 }
             ],
-            'fnCreatedRow': function (nRow, full) {
-                $(nRow).attr('id', 'row_' + full['ProductID']);
+            "createdRow": function (row, full) {
+                $(row).attr('id', 'row_' + full['ProductID']);
             }
         });
     }
