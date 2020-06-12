@@ -59,9 +59,9 @@ namespace CaffeineFix.Controllers
 
         public ActionResult ViewProduct(int productID)
         {
-            List<ProductDomainModel> productDM = productsBusiness.GetProduct(productID);
+            ProductDomainModel productDM = productsBusiness.GetProduct(productID);
 
-            List<ProductViewModel> productVM = new List<ProductViewModel>();
+            ProductViewModel productVM = new ProductViewModel();
 
             AutoMapper.Mapper.Map(productDM, productVM);
 

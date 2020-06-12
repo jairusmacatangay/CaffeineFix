@@ -14,7 +14,7 @@ namespace CaffeineFix.Business.Interface
         List<ProductDomainModel> SortByColumnWithOrder(string order, string orderDir, List<ProductDomainModel> productsDMList);
         List<ProductDomainModel> ApplyPagination(int startRec, int pageSize, List<ProductDomainModel> productsDMList);
         int CountProducts(string search);
-        List<ProductDomainModel> GetProduct(int productID);
+        ProductDomainModel GetProduct(int productID);
         List<ProductCategoryDomainModel> GetCategories();
         ProductDomainModel GetProductForEdit(int productID);
         List<RoastLevelDomainModel> GetRoastLevelList(int productCategoryID);

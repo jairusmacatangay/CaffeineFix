@@ -160,29 +160,23 @@ namespace CaffeineFix.Business
             }
         }
 
-        public List<ProductDomainModel> GetProduct(int productID)
+        public ProductDomainModel GetProduct(int productID)
         {
-            List<ProductDomainModel> product = productRepository.GetAll().Where(x => x.ProductID == productID)
-                .Select(m => new ProductDomainModel
-                {
-                    ProductID = m.ProductID,
-                    ProductName = m.ProductName,
-                    ProductCategoryID = m.ProductCategoryID,
-                    Description = m.Description,
-                    Price = m.Price,
-                    ImageID = m.ImageID,
-                    RoastLevelID = m.RoastLevelID,
-                    EquipmentTypeID = m.EquipmentTypeID,
-                    DrinkwareTypeID = m.DrinkwareTypeID,
-                    DateCreated = m.DateCreated,
-                    DateLastModified = m.DateLastModified,
-                    ProductCategoryName = m.ProductCategory.ProductCategoryName,
-                    RoastLevelLabel = m.RoastLevel.RoastLevelLabel,
-                    EquipmentTypeLabel = m.EquipmentType.EquipmentTypeLabel,
-                    DrinkwareTypeLabel = m.DrinkwareType.DrinkwareTypeLabel
-                }).ToList();
+            Product product = productRepository.SingleOrDefault(x => x.ProductID == productID);
 
-            return product;
+            ProductDomainModel dm = new ProductDomainModel();
+
+            dm.ProductID = product.ProductID;
+            dm.ProductName = product.ProductName;
+            dm.Description = product.Description;
+            dm.Price = product.Price;
+            dm.ProductCategoryName = product.ProductCategory.ProductCategoryName;
+            dm.RoastLevelLabel = product.RoastLevel.RoastLevelLabel;
+            dm.EquipmentTypeLabel = product.EquipmentType.EquipmentTypeLabel;
+            dm.DrinkwareTypeLabel = product.DrinkwareType.DrinkwareTypeLabel;
+            dm.ImagePath = product.ProductImage.ImagePath;
+
+            return dm;
         }
 
         public List<ProductCategoryDomainModel> GetCategories()

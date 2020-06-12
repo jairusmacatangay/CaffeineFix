@@ -1,48 +1,51 @@
-﻿@model IEnumerable<CaffeineFix.Models.ProductViewModel>
+﻿@model CaffeineFix.Models.ProductViewModel
 
-<table class="table table-bordered">
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
+<div class="row">
+    <div class="col-6">
+        <img src="@Model.ImagePath" class="img-fluid img-thumbnail" />
+    </div>
+    <div class="col-6">
+        <table class="table table-bordered">
             <tr>
                 <td><b>Name</b></td>
-                <td>@item.ProductName</td>
+                <td>@Model.ProductName</td>
             </tr>
             <tr>
                 <td><b>Category</b></td>
-                <td>@item.ProductCategoryName</td>
+                <td>@Model.ProductCategoryName</td>
             </tr>
-            <tr>
-                <td><b>Description</b></td>
-                <td>@item.Description</td>
-            </tr>
-            <tr>
-                <td><b>Price</b></td>
-                <td>&#8369; @item.Price</td>
-            </tr>
-            if (item.ProductCategoryName == "Coffee")
+            @if (Model.ProductCategoryName == "Coffee")
             {
                 <tr>
                     <td><b>Roast Level</b></td>
-                    <td>@item.RoastLevelLabel</td>
+                    <td>@Model.RoastLevelLabel</td>
                 </tr>
             }
-            else if (item.ProductCategoryName == "Equipment")
+            else if (Model.ProductCategoryName == "Equipment")
             {
                 <tr>
-                    <td><b>Type</b></td>
-                    <td>@item.EquipmentTypeLabel</td>
+                    <td><b>Equipment Type</b></td>
+                    <td>@Model.EquipmentTypeLabel</td>
                 </tr>
             }
             else
             {
                 <tr>
-                    <td><b>Type</b></td>
-                    <td>@item.DrinkwareTypeLabel</td>
+                    <td><b>Drinkware Type</b></td>
+                    <td>@Model.DrinkwareTypeLabel</td>
                 </tr>
             }
-        }
-    }
-</table>
+            <tr>
+                <td><b>Price</b></td>
+                <td>&#8369; @Model.Price</td>
+            </tr>
+            <tr>
+                <td><b>Description</b></td>
+                <td>@Model.Description</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
 
