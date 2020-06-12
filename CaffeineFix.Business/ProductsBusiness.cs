@@ -32,18 +32,16 @@ namespace CaffeineFix.Business
             productImageRepository = new ProductImageRepository(unitOfWork);
         }
 
-        public List<ProductDomainModel> GetAllProducts(int pageNo, int pageSize, string search)
+        public List<ProductDomainModel> GetAllProducts(string search)
         {
             List<ProductDomainModel> productsList = new List<ProductDomainModel>();
 
-            if (search != null)
+            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 productsList = productRepository.GetAll(x => x.IsDeleted == false)
                     .Where(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(search.ToLower()) ||
                     x.ProductCategory.ProductCategoryName.ToLower().Contains(search.ToLower()))
                     .OrderBy(m => m.ProductID)
-                    .Skip((pageNo - 1) * pageSize)
-                    .Take(pageSize)
                     .Select(m => new ProductDomainModel
                     {
                         ProductID = m.ProductID,
@@ -69,8 +67,6 @@ namespace CaffeineFix.Business
                 productsList = productRepository.GetAll(x => x.IsDeleted == false)
                     .Where(x => x.IsDeleted == false)
                     .OrderBy(m => m.ProductID)
-                    .Skip((pageNo - 1) * pageSize)
-                    .Take(pageSize)
                     .Select(m => new ProductDomainModel
                     {
                         ProductID = m.ProductID,
@@ -142,6 +138,14 @@ namespace CaffeineFix.Business
             return list;
         }
 
+        public List<ProductDomainModel> ApplyPagination(int startRec, int pageSize, 
+            List<ProductDomainModel> productsDMList)
+        {
+            List<ProductDomainModel> list = new List<ProductDomainModel>();
+            list = productsDMList.Skip(startRec).Take(pageSize).ToList();
+            return list;
+        }
+
         public int CountProducts(string search)
         {
             if (search != null)
@@ -154,15 +158,6 @@ namespace CaffeineFix.Business
             {
                 return productRepository.GetAll(x => x.IsDeleted == false).Where(x => x.IsDeleted == false).Count();
             }
-        }
-
-        public int GetPageNo(int startRec, int pageSize)
-        {
-            if (startRec >= pageSize)
-            {
-                return (startRec / pageSize) + 1;
-            }
-            return 1;
         }
 
         public List<ProductDomainModel> GetProduct(int productID)

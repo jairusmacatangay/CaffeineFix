@@ -34,16 +34,15 @@ namespace CaffeineFix.Controllers
             string orderDir = Request.Form.GetValues("order[0][dir]")[0];
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
-            int pageNo = 1;
             int totalCount = 0;
             
-            pageNo = productsBusiness.GetPageNo(startRec, pageSize);
-
             totalCount = productsBusiness.CountProducts(search);
 
-            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(pageNo, pageSize, search);
+            List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(search);
 
             productsDMList = productsBusiness.SortByColumnWithOrder(order, orderDir, productsDMList);
+
+            productsDMList = productsBusiness.ApplyPagination(startRec, pageSize, productsDMList);
 
             List<ProductViewModel> productsVMList = new List<ProductViewModel>();
 
