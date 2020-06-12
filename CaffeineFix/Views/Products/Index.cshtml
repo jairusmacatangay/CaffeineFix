@@ -104,8 +104,12 @@
 
 <script>
     $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
         BindDataTable();
-    })
+        table.on('draw', function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    });
 
     function parseJsonDate(jsonDate) {
         var offset = new Date().getTimezoneOffset() * 60000;
@@ -165,14 +169,17 @@
                     }
                 },
                 {
-                    "data" : "ProductID",
+                    "data": "ProductID",
                     "render": function (ProductID) {
-                        return '<a href="#" class="btn btn-success btn-sm" onclick="ViewProduct(' + ProductID + ')"><i class="fa fa-eye"></i></a> <a href="#" class="btn btn-success btn-sm" onclick="LoadEditProductForm(' + ProductID + ')"><i class="fa fa-pencil"></i></a> <a href="#" class="btn btn-danger btn-sm" onclick="LoadDeleteModal(' + ProductID + ')"><i class="fa fa-trash"></i></a>'
+                        return '<a href="#" class="btn btn-info btn-sm" data-toggle="tooltip" title="View Product" onclick="ViewProduct(' + ProductID + ')"><i class="fa fa-search"></i></a> <a href="#" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Product" onclick="LoadEditProductForm(' + ProductID + ')"><i class="fa fa-pencil"></i></a> <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete Product" onclick="LoadDeleteModal(' + ProductID + ')"><i class="fa fa-trash"></i></a>'
                     }
                 }
             ],
             "createdRow": function (row, full) {
                 $(row).attr('id', 'row_' + full['ProductID']);
+            },
+            "drawCallback": function (settings) {
+                $('[data-toggle="tooltip"]').tooltip();
             }
         });
     }
