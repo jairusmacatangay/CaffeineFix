@@ -7,13 +7,15 @@
         <div class="col-6">
             <!--Product Name-->
             <div class="form-group">
-                <label for="ProductName">Name</label>
+                @Html.LabelFor(m => m.ProductName)
                 @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger small" })
             </div>
             <!--Product Category-->
             <div class="form-group">
-                <label for="ProductCategoryID">Category</label>
+                @Html.LabelFor(m => m.ProductCategoryID)
                 @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProductCategoryID, "", new { @class = "text-danger small" })
             </div>
             <!--Sub-Category-->
             <div class="form-group">
@@ -22,22 +24,27 @@
                 @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display:none" })
                 @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display:none" })
                 @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display:none" })
+                @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
+                @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
+                @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
             </div>
             <!--Price-->
             <div class="form-group">
-                <label for="Price">Price</label>
+                @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger small" })
             </div>
             <!--Product Description-->
             <div class="form-group">
-                <label for="Description">Description</label>
+                @Html.LabelFor(m => m.Description)
                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
             </div>
         </div>
-        <div class="col-6">            
+        <div class="col-6">
             <!--Image Upload-->
             <div class="form-group">
-                <label>Image</label>
+                @Html.LabelFor(m => m.ImageFile)
                 <br />
                 @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "imgBrowse" })
             </div>
@@ -60,7 +67,7 @@
 
         $("#ProductCategoryID").change(function () {
             let productCategoryID = $(this).val();
-            
+
             if (productCategoryID == 1) {
                 $.ajax({
                     type: "POST",
@@ -129,7 +136,7 @@
             let price = $("#Price").val();
             let description = $("#Description").val();
             let file = $("#imgBrowse").get(0).files;
-            
+
             let formData = new FormData;
             formData.append("ProductName", name);
             formData.append("ProductCategoryID", category);
@@ -139,19 +146,21 @@
             formData.append("Price", price);
             formData.append("Description", description);
             formData.append("ImageFile", file[0]);
-            
-            $.ajax({
-                type: "POST",
-                url: "/Products/AddProduct",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    clearPreview();
-                    $("#addModal").modal("hide");
-                    window.location.href = "/Products/Index";
-                }
-            })
+
+            if ($("#addForm").valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Products/AddProduct",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        clearPreview();
+                        $("#addModal").modal("hide");
+                        window.location.href = "/Products/Index";
+                    }
+                })
+            }
         })
 
         $("#imgBrowse").change(function () {
@@ -190,3 +199,5 @@
         document.getElementById("clearPreviewImg").addEventListener("click", clearPreview, false);
     })
 </script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
