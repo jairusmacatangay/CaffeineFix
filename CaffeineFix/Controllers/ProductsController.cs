@@ -156,12 +156,13 @@ namespace CaffeineFix.Controllers
 
             string fullFilePath = rootFolderPath + fileName;
 
-            FileStream fs = System.IO.File.Create(fullFilePath);
-
-            fs.Flush();
-            fs.Dispose();
-            fs.Close();
-
+            using (var fs = System.IO.File.Create(fullFilePath))
+            {
+                fs.Flush();
+                fs.Dispose();
+                fs.Close();
+            }
+            
             BinaryWriter sw = new BinaryWriter(new FileStream(fullFilePath, FileMode.Create, FileAccess.Write));
 
             sw.Write(fileBytes);

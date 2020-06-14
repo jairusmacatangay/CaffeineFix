@@ -8,22 +8,22 @@
             <!--Product Name-->
             <div class="form-group">
                 @Html.LabelFor(m => m.ProductName)
-                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @id = "addProductName" })
                 @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger small" })
             </div>
             <!--Product Category-->
             <div class="form-group">
                 @Html.LabelFor(m => m.ProductCategoryID)
-                @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control", @id = "addProductCategoryID" })
                 @Html.ValidationMessageFor(m => m.ProductCategoryID, "", new { @class = "text-danger small" })
             </div>
             <!--Sub-Category-->
             <div class="form-group">
                 <label>Sub-Category</label>
                 @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), "Select", new { @class = "form-control", @id = "tempDropdown" })
-                @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display:none" })
-                @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display:none" })
-                @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display:none" })
+                @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display:none", @id = "addRoastLevelID" })
+                @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display:none", @id = "addEquipmentTypeID" })
+                @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display:none", @id = "addDrinkwareTypeID" })
                 @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
                 @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
                 @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
@@ -31,13 +31,13 @@
             <!--Price-->
             <div class="form-group">
                 @Html.LabelFor(m => m.Price)
-                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @id = "addPrice" })
                 @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger small" })
             </div>
             <!--Product Description-->
             <div class="form-group">
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "addDescription" })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
             </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ImageFile)
                 <br />
-                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "imgBrowse" })
+                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "addImgBrowse" })
             </div>
             <!--Image Preview-->
             <div id="imgPreview" class="img-thumbnail" style="display:none">
@@ -58,14 +58,14 @@
             </div>
         </div>
     </div>
-    <a href="#" id="btnSubmit" class="btn btn-primary">Add</a>
+    <a href="#" id="addBtnSubmit" class="btn btn-primary">Add</a>
 
 </form>
 
 <script>
     $(document).ready(function () {
 
-        $("#ProductCategoryID").change(function () {
+        $("#addProductCategoryID").change(function () {
             let productCategoryID = $(this).val();
 
             if (productCategoryID == 1) {
@@ -75,15 +75,15 @@
                     contentType: "html",
                     success: function (response) {
                         $("#tempDropdown").remove();
-                        $("#EquipmentTypeID").hide();
-                        $("#DrinkwareTypeID").hide();
-                        $("#RoastLevelID").show();
-                        $("#RoastLevelID").empty();
-                        $("#RoastLevelID").append(response);
-                        $("#EquipmentTypeID").empty();
-                        $("#EquipmentTypeID").append("<option value=''>N/A</option>");
-                        $("#DrinkwareTypeID").empty();
-                        $("#DrinkwareTypeID").append("<option value=''>N/A</option>");
+                        $("#addEquipmentTypeID").hide();
+                        $("#addDrinkwareTypeID").hide();
+                        $("#addRoastLevelID").show();
+                        $("#addRoastLevelID").empty();
+                        $("#addRoastLevelID").append(response);
+                        $("#addEquipmentTypeID").empty();
+                        $("#addEquipmentTypeID").append("<option value=''>N/A</option>");
+                        $("#addDrinkwareTypeID").empty();
+                        $("#addDrinkwareTypeID").append("<option value=''>N/A</option>");
                     }
                 })
             } else if (productCategoryID == 2) {
@@ -93,16 +93,15 @@
                     contentType: "html",
                     success: function (response) {
                         $("#tempDropdown").remove();
-                        $("#DateCreated").hide();
-                        $("#RoastLevelID").hide();
-                        $("#DrinkwareTypeID").hide();
-                        $("#EquipmentTypeID").show();
-                        $("#EquipmentTypeID").empty();
-                        $("#EquipmentTypeID").append(response);
-                        $("#RoastLevelID").empty();
-                        $("#RoastLevelID").append("<option value=''>N/A</option>");
-                        $("#DrinkwareTypeID").empty();
-                        $("#DrinkwareTypeID").append("<option value=''>N/A</option>");
+                        $("#addRoastLevelID").hide();
+                        $("#addDrinkwareTypeID").hide();
+                        $("#addEquipmentTypeID").show();
+                        $("#addEquipmentTypeID").empty();
+                        $("#addEquipmentTypeID").append(response);
+                        $("#addRoastLevelID").empty();
+                        $("#addRoastLevelID").append("<option value=''>N/A</option>");
+                        $("#addDrinkwareTypeID").empty();
+                        $("#addDrinkwareTypeID").append("<option value=''>N/A</option>");
                     }
                 })
             } else {
@@ -112,58 +111,58 @@
                     contentType: "html",
                     success: function (response) {
                         $("#tempDropdown").remove();
-                        $("#DateCreated").hide();
-                        $("#RoastLevelID").hide();
-                        $("#EquipmentTypeID").hide();
-                        $("#DrinkwareTypeID").show();
-                        $("#DrinkwareTypeID").empty();
-                        $("#DrinkwareTypeID").append(response);
-                        $("#RoastLevelID").empty();
-                        $("#RoastLevelID").append("<option value=''>N/A</option>");
-                        $("#EquipmentTypeID").empty();
-                        $("#EquipmentTypeID").append("<option value=''>N/A</option>");
+                        $("#addRoastLevelID").hide();
+                        $("#addEquipmentTypeID").hide();
+                        $("#addDrinkwareTypeID").show();
+                        $("#addDrinkwareTypeID").empty();
+                        $("#addDrinkwareTypeID").append(response);
+                        $("#addRoastLevelID").empty();
+                        $("#addRoastLevelID").append("<option value=''>N/A</option>");
+                        $("#addEquipmentTypeID").empty();
+                        $("#addEquipmentTypeID").append("<option value=''>N/A</option>");
                     }
                 })
             }
         })
+        
+        $(document).on("click", "#addBtnSubmit", function () {
+            let addName = $("#addProductName").val();
+            let addCategory = $("#addProductCategoryID").val();
+            let addRoastLevel = $("#addRoastLevelID").val();
+            let addEquipmentType = $("#addEquipmentTypeID").val();
+            let addDrinkwareType = $("#addDrinkwareTypeID").val();
+            let addPrice = $("#addPrice").val();
+            let addDescription = $("#addDescription").val();
+            let addFile = $("#addImgBrowse").get(0).files;
 
-        $("#btnSubmit").click(function () {
-            let name = $("#ProductName").val();
-            let category = $("#ProductCategoryID").val();
-            let roastLevel = $("#RoastLevelID").val();
-            let equipmentType = $("#EquipmentTypeID").val();
-            let drinkwareType = $("#DrinkwareTypeID").val();
-            let price = $("#Price").val();
-            let description = $("#Description").val();
-            let file = $("#imgBrowse").get(0).files;
-
-            let formData = new FormData;
-            formData.append("ProductName", name);
-            formData.append("ProductCategoryID", category);
-            formData.append("RoastLevelID", roastLevel);
-            formData.append("EquipmentTypeID", equipmentType);
-            formData.append("DrinkwareTypeID", drinkwareType);
-            formData.append("Price", price);
-            formData.append("Description", description);
-            formData.append("ImageFile", file[0]);
+            let addFormData = new FormData;
+            addFormData.append("ProductName", addName);
+            addFormData.append("ProductCategoryID", addCategory);
+            addFormData.append("RoastLevelID", addRoastLevel);
+            addFormData.append("EquipmentTypeID", addEquipmentType);
+            addFormData.append("DrinkwareTypeID", addDrinkwareType);
+            addFormData.append("Price", addPrice);
+            addFormData.append("Description", addDescription);
+            addFormData.append("ImageFile", addFile[0]);
 
             if ($("#addForm").valid()) {
                 $.ajax({
                     type: "POST",
                     url: "/Products/AddProduct",
-                    data: formData,
+                    data: addFormData,
                     processData: false,
                     contentType: false,
                     success: function () {
                         clearPreview();
                         $("#addModal").modal("hide");
-                        window.location.href = "/Products/Index";
-                    }
+                        $("#addAlert").show();
+                        $("#addAlert").delay(3000).fadeOut();
+                        $("#myDataTable").DataTable().ajax.reload();
                 })
             }
         })
 
-        $("#imgBrowse").change(function () {
+        $("#addImgBrowse").change(function () {
             var File = this.files;
 
             if (File && File[0]) {
@@ -191,7 +190,7 @@
         }
 
         let clearPreview = function () {
-            $("#imgBrowse").val('');
+            $("#addImgBrowse").val('');
             $("#description").text('');
             $("#imgPreview").hide();
         }

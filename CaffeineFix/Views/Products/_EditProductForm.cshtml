@@ -9,13 +9,13 @@
             <!--Product Name-->
             <div class="form-group">
                 @Html.LabelFor(m => m.ProductName)
-                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @id = "editProductName" })
                 @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger small" })
             </div>
             <!--Product Category-->
             <div class="form-group">
                 @Html.LabelFor(m => m.ProductCategoryID)
-                @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control", @id = "editProductCategoryID" })
                 @Html.ValidationMessageFor(m => m.ProductCategoryID, "", new { @class = "text-danger small" })
             </div>
             <!--Sub-Category-->
@@ -23,27 +23,27 @@
                 <label>Sub-Category</label>
                 @if (Model.RoastLevelID != 0)
                 {
-                    @Html.DropDownListFor(m => m.RoastLevelID, ViewBag.RoastLevelList as SelectList, new { @class = "form-control" })
-                    @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
-                    @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
+                    @Html.DropDownListFor(m => m.RoastLevelID, ViewBag.RoastLevelList as SelectList, new { @class = "form-control", @id = "editRoastLevelID" })
+                    @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none", @id = "editEquipmentTypeID" })
+                    @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none", @id = "editDrinkwareTypeID" })
                     @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
                     @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
                     @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
                 }
                 else if (Model.EquipmentTypeID != 0)
                 {
-                    @Html.DropDownListFor(m => m.EquipmentTypeID, ViewBag.EquipmentTypeList as SelectList, new { @class = "form-control" })
-                    @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
-                    @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
+                    @Html.DropDownListFor(m => m.EquipmentTypeID, ViewBag.EquipmentTypeList as SelectList, new { @class = "form-control", @id = "editEquipmentTypeID" })
+                    @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none", @id = "editRoastLevelID" })
+                    @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none", @id = "editDrinkwareTypeID" })
                     @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
                     @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
                     @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
                 }
                 else if (Model.DrinkwareTypeID != 0)
                 {
-                    @Html.DropDownListFor(m => m.DrinkwareTypeID, ViewBag.DrinkwareTypeList as SelectList, new { @class = "form-control" })
-                    @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
-                    @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
+                    @Html.DropDownListFor(m => m.DrinkwareTypeID, ViewBag.DrinkwareTypeList as SelectList, new { @class = "form-control", @id = "editDrinkwareTypeID" })
+                    @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none", @id = "editEquipmentTypeID" })
+                    @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none", @id = "editRoastLevelID" })
                     @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
                     @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
                     @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
@@ -52,13 +52,13 @@
             <!--Price-->
             <div class="form-group">
                 @Html.LabelFor(m => m.Price)
-                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @id = "editPrice" })
                 @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger small" })
             </div>
             <!--Product Description-->
             <div class="form-group">
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "editDescription" })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
             </div>
         </div>
@@ -68,7 +68,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ImageFile)
                 <br />
-                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "imgBrowse" })
+                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "editImgBrowse" })
                 <small class="form-text text-muted">Upload new image to replace current image</small>
             </div>
             <!--Image Preview-->
@@ -81,13 +81,13 @@
             </div>
         </div>
     </div>
-    <a href="#" id="btnSubmit" class="btn btn-primary">Update</a>
+    <a href="#" id="updateBtnSubmit" class="btn btn-primary">Update</a>
 </form>
 
 <script>
     $(document).ready(function () {
 
-        $("#ProductCategoryID").change(function () {
+        $("#editProductCategoryID").change(function () {
             let productCategoryID = $(this).val();
 
             if (productCategoryID == 1) {
@@ -96,15 +96,15 @@
                     url: "/Products/GetRoastLevelList?productCategoryID=" + productCategoryID,
                     contentType: "html",
                     success: function (response) {
-                        $("#EquipmentTypeID").hide();
-                        $("#DrinkwareTypeID").hide();
-                        $("#RoastLevelID").show();
-                        $("#RoastLevelID").empty();
-                        $("#RoastLevelID").append(response);
-                        $("#EquipmentTypeID").empty();
-                        $("#EquipmentTypeID").append("<option value=''>N/A</option>");
-                        $("#DrinkwareTypeID").empty();
-                        $("#DrinkwareTypeID").append("<option value=''>N/A</option>");
+                        $("#editEquipmentTypeID").hide();
+                        $("#editDrinkwareTypeID").hide();
+                        $("#editRoastLevelID").show();
+                        $("#editRoastLevelID").empty();
+                        $("#editRoastLevelID").append(response);
+                        $("#editEquipmentTypeID").empty();
+                        $("#editEquipmentTypeID").append("<option value=''>N/A</option>");
+                        $("#editDrinkwareTypeID").empty();
+                        $("#editDrinkwareTypeID").append("<option value=''>N/A</option>");
                     }
                 })
             } else if (productCategoryID == 2) {
@@ -113,15 +113,15 @@
                     url: "/Products/GetEquipmentTypeList?productCategoryID=" + productCategoryID,
                     contentType: "html",
                     success: function (response) {
-                        $("#RoastLevelID").hide();
-                        $("#DrinkwareTypeID").hide();
-                        $("#EquipmentTypeID").show();
-                        $("#EquipmentTypeID").empty();
-                        $("#EquipmentTypeID").append(response);
-                        $("#RoastLevelID").empty();
-                        $("#RoastLevelID").append("<option value=''>N/A</option>");
-                        $("#DrinkwareTypeID").empty();
-                        $("#DrinkwareTypeID").append("<option value=''>N/A</option>");
+                        $("#editRoastLevelID").hide();
+                        $("#editDrinkwareTypeID").hide();
+                        $("#editEquipmentTypeID").show();
+                        $("#editEquipmentTypeID").empty();
+                        $("#editEquipmentTypeID").append(response);
+                        $("#editRoastLevelID").empty();
+                        $("#editRoastLevelID").append("<option value=''>N/A</option>");
+                        $("#editDrinkwareTypeID").empty();
+                        $("#editDrinkwareTypeID").append("<option value=''>N/A</option>");
                     }
                 })
             } else {
@@ -130,61 +130,21 @@
                     url: "/Products/GetDrinkwareTypeList?productCategoryID=" + productCategoryID,
                     contentType: "html",
                     success: function (response) {
-                        $("#RoastLevelID").hide();
-                        $("#EquipmentTypeID").hide();
-                        $("#DrinkwareTypeID").show();
-                        $("#DrinkwareTypeID").empty();
-                        $("#DrinkwareTypeID").append(response);
-                        $("#RoastLevelID").empty();
-                        $("#RoastLevelID").append("<option value=''>N/A</option>");
-                        $("#EquipmentTypeID").empty();
-                        $("#EquipmentTypeID").append("<option value=''>N/A</option>");
+                        $("#editRoastLevelID").hide();
+                        $("#editEquipmentTypeID").hide();
+                        $("#editDrinkwareTypeID").show();
+                        $("#editDrinkwareTypeID").empty();
+                        $("#editDrinkwareTypeID").append(response);
+                        $("#editRoastLevelID").empty();
+                        $("#editRoastLevelID").append("<option value=''>N/A</option>");
+                        $("#editEquipmentTypeID").empty();
+                        $("#editEquipmentTypeID").append("<option value=''>N/A</option>");
                     }
                 })
             }
         })
 
-        $("#btnSubmit").click(function () {
-            let productID = $("#ProductID").val();
-            let name = $("#ProductName").val();
-            let category = $("#ProductCategoryID").val();
-            let roastLevel = $("#RoastLevelID").val();
-            let equipmentType = $("#EquipmentTypeID").val();
-            let drinkwareType = $("#DrinkwareTypeID").val();
-            let price = $("#Price").val();
-            let description = $("#Description").val();
-            let imageID = $("#ImageID").val();
-            let file = $("#imgBrowse").get(0).files;
-
-            let formData = new FormData;
-            formData.append("ProductID", productID);
-            formData.append("ProductName", name);
-            formData.append("ProductCategoryID", category);
-            formData.append("RoastLevelID", roastLevel);
-            formData.append("EquipmentTypeID", equipmentType);
-            formData.append("DrinkwareTypeID", drinkwareType);
-            formData.append("Price", price);
-            formData.append("Description", description);
-            formData.append("ImageID", imageID);
-            formData.append("ImageFile", file[0]);
-
-            if ($("#editForm").valid()) {
-                $.ajax({
-                    type: "POST",
-                    url: "/Products/UpdateProduct",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function () {
-                        clearPreview();
-                        $("#editModal").modal("hide");
-                        window.location.href = "/Products/Index";
-                    }
-                })
-            }
-        })
-
-        $("#imgBrowse").change(function () {
+        $("#editImgBrowse").change(function () {
             var File = this.files;
 
             if (File && File[0]) {
@@ -212,12 +172,55 @@
         }
 
         let clearPreview = function () {
-            $("#imgBrowse").val('');
+            $("#editImgBrowse").val('');
             $("#description").text('');
             $("#imgPreview").hide();
         }
 
         document.getElementById("clearPreviewImg").addEventListener("click", clearPreview, false);
+
+        $(document).on("click", "#updateBtnSubmit", function () {
+            let editProductID = $("#ProductID").val();
+            let editName = $("#editProductName").val();
+            let editCategory = $("#editProductCategoryID").val();
+            let editRoastLevel = $("#editRoastLevelID").val();
+            let editEquipmentType = $("#editEquipmentTypeID").val();
+            let editDrinkwareType = $("#editDrinkwareTypeID").val();
+            let editPrice = $("#editPrice").val();
+            let editDescription = $("#editDescription").val();
+            let editImageID = $("#ImageID").val();
+            let editFile = $("#editImgBrowse").get(0).files;
+
+            let updateFormData = new FormData;
+            updateFormData.append("ProductID", editProductID);
+            updateFormData.append("ProductName", editName);
+            updateFormData.append("ProductCategoryID", editCategory);
+            updateFormData.append("RoastLevelID", editRoastLevel);
+            updateFormData.append("EquipmentTypeID", editEquipmentType);
+            updateFormData.append("DrinkwareTypeID", editDrinkwareType);
+            updateFormData.append("Price", editPrice);
+            updateFormData.append("Description", editDescription);
+            updateFormData.append("ImageID", editImageID);
+            updateFormData.append("ImageFile", editFile[0]);
+
+            if ($("#editForm").valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Products/UpdateProduct",
+                    data: updateFormData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        clearPreview();
+                        $("#editModal").modal("hide");
+                        $("#updateAlert").show();
+                        $("#updateAlert").delay(3000).fadeOut();
+                        $("#myDataTable").DataTable().ajax.reload();
+                    }
+                })
+            }
+        })
+
     })
 </script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

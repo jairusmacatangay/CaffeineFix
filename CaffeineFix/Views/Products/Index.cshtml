@@ -6,6 +6,30 @@
     @Scripts.Render("~/bundles/DataTables")
 }
 
+<!--Add Product Success Alert-->
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="addAlert" style="display:none">
+    You have successfully added a product!
+    <button type="button" class="close" onclick="hideAddAlert()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!--Delete Product Success Alert-->
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="deleteAlert" style="display:none">
+    Product was deleted successfully!
+    <button type="button" class="close" onclick="hideDeleteAlert()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!--Update Product Success Alert-->
+<div class="alert alert-success alert-dismissible fade show" role="alert" id="updateAlert" style="display:none">
+    Product was updated successfully!
+    <button type="button" class="close" onclick="hideUpdateAlert()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <a href="#" class="btn btn-success btn-sm mb-3" onclick="LoadAddProductForm()"><i class="fa fa-plus"></i> Add Product</a>
 
 <table class="display" id="myDataTable">
@@ -104,11 +128,15 @@
 
 <script>
     $(document).ready(function () {
+
         $('[data-toggle="tooltip"]').tooltip();
+
         BindDataTable();
+
         table.on('draw', function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+
     });
 
     function parseJsonDate(jsonDate) {
@@ -227,8 +255,22 @@
             success: function (result) {
                 $("#deleteModal").modal("hide");
                 $("#row_" + productID).remove();
+                $("#deleteAlert").show();
+                $("#deleteAlert").delay(3000).fadeOut();
             }
         })
+    }
+
+    let hideAddAlert = function () {
+        $("#addAlert").fadeOut();
+    }
+
+    let hideDeleteAlert = function () {
+        $("#deleteAlert").fadeOut();
+    }
+
+    let hideUpdateAlert = function () {
+        $("#updateAlert").fadeOut();
     }
 </script>
 
