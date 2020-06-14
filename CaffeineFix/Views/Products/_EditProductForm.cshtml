@@ -8,13 +8,15 @@
             @Html.HiddenFor(m => m.ProductID)
             <!--Product Name-->
             <div class="form-group">
-                <label for="ProductName">Name</label>
+                @Html.LabelFor(m => m.ProductName)
                 @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger small" })
             </div>
             <!--Product Category-->
             <div class="form-group">
-                <label for="ProductCategoryID">Category</label>
+                @Html.LabelFor(m => m.ProductCategoryID)
                 @Html.DropDownListFor(m => m.ProductCategoryID, ViewBag.CategoryList as SelectList, "Select", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProductCategoryID, "", new { @class = "text-danger small" })
             </div>
             <!--Sub-Category-->
             <div class="form-group">
@@ -24,36 +26,47 @@
                     @Html.DropDownListFor(m => m.RoastLevelID, ViewBag.RoastLevelList as SelectList, new { @class = "form-control" })
                     @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
                     @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
+                    @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
+                    @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
+                    @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
                 }
                 else if (Model.EquipmentTypeID != 0)
                 {
                     @Html.DropDownListFor(m => m.EquipmentTypeID, ViewBag.EquipmentTypeList as SelectList, new { @class = "form-control" })
                     @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
                     @Html.DropDownListFor(m => m.DrinkwareTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
+                    @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
+                    @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
+                    @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
                 }
                 else if (Model.DrinkwareTypeID != 0)
                 {
                     @Html.DropDownListFor(m => m.DrinkwareTypeID, ViewBag.DrinkwareTypeList as SelectList, new { @class = "form-control" })
                     @Html.DropDownListFor(m => m.EquipmentTypeID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
                     @Html.DropDownListFor(m => m.RoastLevelID, new SelectList(""), new { @class = "form-control", @style = "display: none" })
+                    @Html.ValidationMessageFor(m => m.RoastLevelID, "", new { @class = "text-danger small" })
+                    @Html.ValidationMessageFor(m => m.EquipmentTypeID, "", new { @class = "text-danger small" })
+                    @Html.ValidationMessageFor(m => m.DrinkwareTypeID, "", new { @class = "text-danger small" })
                 }
             </div>
             <!--Price-->
             <div class="form-group">
-                <label for="Price">Price</label>
+                @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger small" })
             </div>
             <!--Product Description-->
             <div class="form-group">
-                <label for="Description">Description</label>
+                @Html.LabelFor(m => m.Description)
                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
             </div>
         </div>
         <div class="col-6">
             <!--Image Upload-->
             @Html.HiddenFor(m => m.ImageID)
             <div class="form-group">
-                <label>Image</label>
+                @Html.LabelFor(m => m.ImageFile)
                 <br />
                 @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "imgBrowse" })
                 <small class="form-text text-muted">Upload new image to replace current image</small>
@@ -155,18 +168,20 @@
             formData.append("ImageID", imageID);
             formData.append("ImageFile", file[0]);
 
-            $.ajax({
-                type: "POST",
-                url: "/Products/UpdateProduct",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    clearPreview();
-                    $("#editModal").modal("hide");
-                    window.location.href = "/Products/Index";
-                }
-            })
+            if ($("#editForm").valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Products/UpdateProduct",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        clearPreview();
+                        $("#editModal").modal("hide");
+                        window.location.href = "/Products/Index";
+                    }
+                })
+            }
         })
 
         $("#imgBrowse").change(function () {
@@ -205,3 +220,5 @@
         document.getElementById("clearPreviewImg").addEventListener("click", clearPreview, false);
     })
 </script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
