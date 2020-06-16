@@ -46,7 +46,9 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ImageFile)
                 <br />
-                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "addImgBrowse" })
+                @Html.TextBoxFor(m => m.ImageFile, new { @type = "file", @id = "addImgBrowse", @accept = ".jpg,.jpeg,.png" })
+                <br />
+                @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "text-danger small" })
             </div>
             <!--Image Preview-->
             <div id="imgPreview" class="img-thumbnail" style="display:none">
@@ -124,7 +126,7 @@
                 })
             }
         })
-        
+
         $(document).on("click", "#addBtnSubmit", function () {
             let addName = $("#addProductName").val();
             let addCategory = $("#addProductCategoryID").val();
@@ -158,6 +160,7 @@
                         $("#addAlert").show();
                         $("#addAlert").delay(3000).fadeOut();
                         $("#myDataTable").DataTable().ajax.reload();
+                    }
                 })
             }
         })
