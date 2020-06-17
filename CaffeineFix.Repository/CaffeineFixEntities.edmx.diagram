@@ -10,12 +10,13 @@
         <EntityTypeShape EntityType="CaffeineFixModel.ProductCategory" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CaffeineFixModel.ProductImage" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CaffeineFixModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CaffeineFixModel.RoastLevel" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaffeineFixModel.RoastLevel" Width="1.5" PointX="3.125" PointY="13.375" IsExpanded="true" />
         <AssociationConnector Association="CaffeineFixModel.FK_Products_DrinkwareType1" ManuallyRouted="false" />
         <AssociationConnector Association="CaffeineFixModel.FK_Products_EquipmentType1" ManuallyRouted="false" />
         <AssociationConnector Association="CaffeineFixModel.FK_Products_ProductCategory1" ManuallyRouted="false" />
         <AssociationConnector Association="CaffeineFixModel.FK_Products_ProductImage1" ManuallyRouted="false" />
         <AssociationConnector Association="CaffeineFixModel.FK_Products_RoastLevel1" ManuallyRouted="false" />
+        <AssociationConnector Association="CaffeineFixModel.FK_ProductImage_ProductImage" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

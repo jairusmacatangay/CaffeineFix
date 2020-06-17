@@ -33,5 +33,6 @@ namespace CaffeineFix.Domain
         public string ImageSize { get; set; }
         public Nullable<int> ImageHeight { get; set; }
         public Nullable<int> ImageWidth { get; set; }
+        public string ImageName { get; set; }
     }
 }

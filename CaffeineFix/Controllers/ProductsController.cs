@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CaffeineFix.Business.Interface;
@@ -35,7 +37,7 @@ namespace CaffeineFix.Controllers
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             int totalCount = 0;
-            
+
             totalCount = productsBusiness.CountProducts(search);
 
             List<ProductDomainModel> productsDMList = productsBusiness.GetAllProducts(search);
@@ -110,21 +112,44 @@ namespace CaffeineFix.Controllers
 
                 fileContentType = productVM.ImageFile.ContentType;
                 string folderPath = "/ProductsImage/";
-                this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, productVM.ImageFile.FileName);
-                filePath = folderPath + productVM.ImageFile.FileName;
+                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss-") + productVM.ImageFile.FileName;
+
+                this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, fileName);
+                filePath = folderPath + fileName;
 
                 string fullFilePath = "C:/Users/Jairus Macatangay/source/repos/CaffeineFix/CaffeineFix" + filePath;
 
                 FileInfo fi = new FileInfo(fullFilePath);
                 string imgSize = (fi.Length / 1024) + " KB";
 
-                Bitmap bitmap = new Bitmap(fullFilePath);
-                int imgHeight = bitmap.Height;
-                int imgWidth = bitmap.Width;
+                int fiAttempts = 0;
+                int fiTimes = 3;
+                TimeSpan fiDelay = TimeSpan.FromSeconds(5.0);
+                int imgHeight = 0;
+                int imgWidth = 0;
+                
+                do
+                {
+                    try
+                    {
+                        fiAttempts++;
+                        using (Bitmap bitmap = new Bitmap(fullFilePath))
+                        {
+                            imgHeight = bitmap.Height;
+                            imgWidth = bitmap.Width;
+                        }
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (fiAttempts == fiTimes) { throw ex; }
+                        Task.Delay(fiDelay).Wait();
+                    }
+                } while (true);
 
                 ProductImageDomainModel img = new ProductImageDomainModel();
 
-                img.ImageName = productVM.ImageFile.FileName;
+                img.ImageName = fileName;
                 img.ImageByte = uploadedFile;
                 img.ImagePath = filePath;
                 img.ImageExt = fileContentType;
@@ -132,17 +157,17 @@ namespace CaffeineFix.Controllers
                 img.ImageSize = imgSize;
                 img.ImageHeight = imgHeight;
                 img.ImageWidth = imgWidth;
-                
+
                 productsBusiness.SaveImageData(img);
 
                 imageID = productsBusiness.GetRecentImageID();
             }
 
             productVM.ImageID = imageID;
-            
+
             ProductDomainModel productDM = new ProductDomainModel();
             AutoMapper.Mapper.Map(productVM, productDM);
-            productsBusiness.AddProduct(productDM);            
+            productsBusiness.AddProduct(productDM);
         }
 
         private void WriteBytesToFile(string rootFolderPath, byte[] fileBytes, string fileName)
@@ -156,20 +181,54 @@ namespace CaffeineFix.Controllers
 
             string fullFilePath = rootFolderPath + fileName;
 
-            using (var fs = System.IO.File.Create(fullFilePath))
+            int fsAttempts = 0;
+            int fsTimes = 3;
+            TimeSpan fsDelay = TimeSpan.FromSeconds(5.0);
+
+            do
             {
-                fs.Flush();
-                fs.Dispose();
-                fs.Close();
-            }
-            
-            BinaryWriter sw = new BinaryWriter(new FileStream(fullFilePath, FileMode.Create, FileAccess.Write));
+                try
+                {
+                    fsAttempts++;
+                    using (var fs = System.IO.File.Create(fullFilePath))
+                    {
+                        fs.Flush();
+                        fs.Dispose();
+                        fs.Close();
+                    }
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (fsAttempts == fsTimes) { throw ex; }
+                    Task.Delay(fsDelay).Wait();
+                }
+            } while (true);
 
-            sw.Write(fileBytes);
+            int swAttempts = 0;
+            int swTimes = 3;
+            TimeSpan swDelay = TimeSpan.FromSeconds(5.0);
 
-            sw.Flush();
-            sw.Dispose();
-            sw.Close();
+            do
+            {
+                try
+                {
+                    swAttempts++;
+                    using (BinaryWriter sw = new BinaryWriter(new FileStream(fullFilePath, FileMode.Create, FileAccess.Write)))
+                    {
+                        sw.Write(fileBytes);
+                        sw.Flush();
+                        sw.Dispose();
+                        sw.Close();
+                    }
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (swAttempts == swTimes) { throw ex; }
+                    Task.Delay(swDelay).Wait();
+                }
+            } while (true);
         }
 
         public void UpdateProduct(ProductViewModel productVM)
@@ -184,8 +243,10 @@ namespace CaffeineFix.Controllers
 
                 fileContentType = productVM.ImageFile.ContentType;
                 string folderPath = "/ProductsImage/";
-                this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, productVM.ImageFile.FileName);
-                filePath = folderPath + productVM.ImageFile.FileName;
+                string fileName = DateTime.Now.ToString("yyyyMMddHHmmss-") + productVM.ImageFile.FileName;
+
+                this.WriteBytesToFile(this.Server.MapPath(folderPath), uploadedFile, fileName);
+                filePath = folderPath + fileName;
 
                 string fullFilePath = "C:/Users/Jairus Macatangay/source/repos/CaffeineFix/CaffeineFix" + filePath;
 
@@ -198,9 +259,9 @@ namespace CaffeineFix.Controllers
 
                 ProductImageDomainModel img = new ProductImageDomainModel();
 
-                img.ImageID = (int)productVM.ImageID;
-                img.ImageName = productVM.ImageFile.FileName;
+                img.ImageName = fileName;
                 img.ImageByte = uploadedFile;
+                img.ImageID = (int)productVM.ImageID;
                 img.ImagePath = filePath;
                 img.ImageExt = fileContentType;
                 img.IsDeleted = false;

@@ -52,7 +52,6 @@ namespace CaffeineFix.Models
         public string EquipmentTypeLabel { get; set; }
         public string DrinkwareTypeLabel { get; set; }
 
-        [Required(ErrorMessage = "Please choose an image to upload")]
         [Display(Name = "Image")]
         [DataType(DataType.Upload)]
         public HttpPostedFileBase ImageFile { get; set; }
@@ -61,5 +60,6 @@ namespace CaffeineFix.Models
         public string ImageSize { get; set; }
         public Nullable<int> ImageHeight { get; set; }
         public Nullable<int> ImageWidth { get; set; }
+        public string ImageName { get; set; }
     }
 }

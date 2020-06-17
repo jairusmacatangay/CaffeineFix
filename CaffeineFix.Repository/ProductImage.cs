@@ -32,5 +32,7 @@ namespace CaffeineFix.Repository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ProductImage ProductImage1 { get; set; }
+        public virtual ProductImage ProductImage2 { get; set; }
     }
 }

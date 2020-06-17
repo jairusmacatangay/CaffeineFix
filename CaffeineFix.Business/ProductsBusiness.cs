@@ -389,10 +389,21 @@ namespace CaffeineFix.Business
             bool result = false;
 
             Product product = productRepository.SingleOrDefault(x => x.IsDeleted == false && x.ProductID == productID);
+
             if (product != null)
             {
                 product.IsDeleted = true;
+
+                ProductImage image = productImageRepository.SingleOrDefault(
+                    x => x.IsDeleted == false && 
+                    x.ImageID == product.ImageID);
+
+                image.IsDeleted = true;
+
                 productRepository.Update(product);
+
+                productImageRepository.Update(image);
+
                 result = true;
             }
 

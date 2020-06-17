@@ -64,6 +64,18 @@
           <Property Name="RoastLevelID" Type="int" Nullable="false" />
           <Property Name="RoastLevelLabel" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_ProductImage_ProductImage">
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="1" />
+          <End Role="ProductImage1" Type="Self.ProductImage" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProductImage">
+              <PropertyRef Name="ImageID" />
+            </Principal>
+            <Dependent Role="ProductImage1">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_DrinkwareType1">
           <End Role="DrinkwareType" Type="Self.DrinkwareType" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -100,7 +112,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_ProductImage1">
+        <Association Name="FK_Products_ProductImage">
           <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="0..1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -131,6 +143,10 @@
           <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoastLevel" EntityType="Self.RoastLevel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProductImage_ProductImage" Association="Self.FK_ProductImage_ProductImage">
+            <End Role="ProductImage" EntitySet="ProductImage" />
+            <End Role="ProductImage1" EntitySet="ProductImage" />
+          </AssociationSet>
           <AssociationSet Name="FK_Products_DrinkwareType1" Association="Self.FK_Products_DrinkwareType1">
             <End Role="DrinkwareType" EntitySet="DrinkwareType" />
             <End Role="Products" EntitySet="Products" />
@@ -143,7 +159,7 @@
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_ProductImage1" Association="Self.FK_Products_ProductImage1">
+          <AssociationSet Name="FK_Products_ProductImage" Association="Self.FK_Products_ProductImage">
             <End Role="ProductImage" EntitySet="ProductImage" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -194,6 +210,8 @@
           <Property Name="ImageSize" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ImageHeight" Type="Int32" />
           <Property Name="ImageWidth" Type="Int32" />
+          <NavigationProperty Name="ProductImage1" Relationship="CaffeineFixModel.FK_ProductImage_ProductImage" FromRole="ProductImage" ToRole="ProductImage1" />
+          <NavigationProperty Name="ProductImage2" Relationship="CaffeineFixModel.FK_ProductImage_ProductImage" FromRole="ProductImage1" ToRole="ProductImage" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -312,7 +330,23 @@
             <End Role="RoastLevel" EntitySet="RoastLevels" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductImage_ProductImage" Association="CaffeineFixModel.FK_ProductImage_ProductImage">
+            <End Role="ProductImage" EntitySet="ProductImages" />
+            <End Role="ProductImage1" EntitySet="ProductImages" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_ProductImage_ProductImage">
+          <End Type="CaffeineFixModel.ProductImage" Role="ProductImage" Multiplicity="1" />
+          <End Type="CaffeineFixModel.ProductImage" Role="ProductImage1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProductImage">
+              <PropertyRef Name="ImageID" />
+            </Principal>
+            <Dependent Role="ProductImage1">
+              <PropertyRef Name="ImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

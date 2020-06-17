@@ -68,7 +68,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ImageFile)
                 <br />
-                @Html.TextBoxFor(m => m.ImageFile, new { type = "file", @id = "editImgBrowse" })
+                @Html.TextBoxFor(m => m.ImageFile, new { @type = "file", @id = "editImgBrowse" })
                 <small class="form-text text-muted">Upload new image to replace current image</small>
             </div>
             <!--Image Preview-->
@@ -219,6 +219,7 @@
                     }
                 })
             }
+            $(document).off("click", "#updateBtnSubmit");
         })
 
     })
