@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "Catalog";
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+<br />
+
+<div class="row">
+
+    <!--Advanced Search-->
+    <div class="col-3">
+
+        <!--Autocomplete Search-->
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" />
+            <div class="input-group-append">
+                <button class="btn btn-success input-group-text"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <hr />
+
+        <b>Categories</b>
+
+        <!--All Checkbox-->
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" value="" id="checkAll">
+            <label class="form-check-label text-muted" for="checkAll">
+                All
+            </label>
+        </div>
+
+        <!--Coffee Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkCoffee">
+            <label class="form-check-label text-muted" for="checkCoffee">
+                Coffee
+            </label>
+        </div>
+
+        <!--Equipment Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkEquipment">
+            <label class="form-check-label text-muted" for="checkEquipment">
+                Equipment
+            </label>
+        </div>
+
+        <!--Drinkware Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkDrinkware">
+            <label class="form-check-label text-muted" for="checkDrinkware">
+                Drinkware
+            </label>
+        </div>
+        <hr />
+
+        <b>Coffee</b>
+
+        <!--Dark Roast Checkbox-->
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" value="" id="checkDarkRoast">
+            <label class="form-check-label text-muted" for="checkDarkRoast">
+                Dark Roast
+            </label>
+        </div>
+
+        <!--Medium Roast Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkMediumRoast">
+            <label class="form-check-label text-muted" for="checkMediumRoast">
+                Medium Roast
+            </label>
+        </div>
+
+        <!--Blonde Roast Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkBlondeRoast">
+            <label class="form-check-label text-muted" for="checkBlondeRoast">
+                Blonde Roast
+            </label>
+        </div>
+        <hr />
+
+        <b>Equipment</b>
+
+        <!--Coffee Supplies Checkbox-->
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" value="" id="checkCoffeeSupplies">
+            <label class="form-check-label text-muted" for="checkCoffeeSupplies">
+                Coffee Supplies
+            </label>
+        </div>
+
+        <!--Coffee Maker Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkCoffeeMaker">
+            <label class="form-check-label text-muted" for="checkCoffeeMaker">
+                Coffee Maker
+            </label>
+        </div>
+
+        <!--Grinder Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkGrinder">
+            <label class="form-check-label text-muted" for="checkGrinder">
+                Grinder
+            </label>
+        </div>
+        <hr />
+
+        <b>Drinkware</b>
+
+        <!--Mug Checkbox-->
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" value="" id="checkMug">
+            <label class="form-check-label text-muted" for="checkMug">
+                Mug
+            </label>
+        </div>
+
+        <!--Tumblr Checkbox-->
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkTumblr">
+            <label class="form-check-label text-muted" for="checkTumblr">
+                Tumblr
+            </label>
+        </div>
+        <hr />
+
+        <!--Price Range-->
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="amount"><b>Price Range:</b></label>
+                <input type="text" class="mx-1" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;" />
+            </div>
+        </div>
+        
+        <!--Price Range Slider-->
+        <div class="row mt-2">
+            <div class="col-9">
+                <div class="mt-2 ml-2" id="priceRange"></div>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-success btn-sm">Go</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-9">
+
+        <div class="row mb-2">
+
+            <div class="col-4 mt-2">
+                <p>Displaying 12 out of 25 products</p>
+            </div>
+
+            <div class="col-2"></div>
+
+            <div class="col-4">
+                <div class="form-row">
+                    <span class="col-3"></span>
+                    <label class="col-3 mt-2">Sort by: </label>
+                    <select class="custom-select col-6">
+                        <option select>---</option>
+                        <option>Price low to high</option>
+                        <option>Price high to low</option>
+                        <option>Latest</option>
+                        <option>Oldest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="form-row">
+                    <span class="col-1"></span>
+                    <label class="col-5 mt-2">View: </label>
+                    <span class="col-3 mt-2"><i class="fa fa-th-large fa-lg"></i></span>
+                    <span class="col-3 mt-2"><i class="fa fa-th-list fa-lg"></i></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            @for (int i = 0; i < 12; i++)
+            {
+                <div class="col-3 px-2">
+                    <div class="card mb-3">
+                        <img src="~/ProductsImage/image-placeholder.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <b>Product Name</b><br />
+                            Price
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+
+        <div class="row">
+            <nav aria-label="Page navigation example" class="ml-auto mr-2">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#priceRange").slider({
+            range: true,
+            min: 300,
+            max: 10000,
+            values: [300, 5000],
+            slide: function (event, ui) {
+                $("#amount").val("₱" + ui.values[0] + " - ₱" + ui.values[1]);
+            }
+        });
+
+        $("#amount").val("₱" + $("#priceRange").slider("values", 0) +
+            " - ₱" + $("#priceRange").slider("values", 1));
+    });
+</script>
+
