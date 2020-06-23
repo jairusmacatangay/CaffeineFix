@@ -21,6 +21,7 @@ namespace CaffeineFix
 
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<IProductsBusiness, ProductsBusiness>();
+            container.RegisterType<IStoreBusiness, StoreBusiness>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

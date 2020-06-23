@@ -13,6 +13,9 @@ namespace CaffeineFix.Infrastructure
         {
             CreateMap<ProductDomainModel, ProductViewModel>();
             CreateMap<ProductViewModel, ProductDomainModel>();
+
+            CreateMap<StoreDomainModel, StoreViewModel>();
+            CreateMap<StoreViewModel, StoreDomainModel>();
         }
 
         public static void Run()

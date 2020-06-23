@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CaffeineFix.Models.StoreViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="col-3 px-2">
+        <div class="card mb-3" style="height: 320.28px;">
+            <img src="@item.ImagePath" class="card-img-top border-bottom" alt="...">
+            <div class="card-body">
+                <b>@item.ProductName</b><br />
+                &#8369; @item.Price
+            </div>
+        </div>
+    </div>
+}
+
+

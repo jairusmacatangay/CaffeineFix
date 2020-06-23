@@ -183,20 +183,7 @@
 
         </div>
 
-        <div class="row">
-            @for (int i = 0; i < 12; i++)
-            {
-                <div class="col-3 px-2">
-                    <div class="card mb-3">
-                        <img src="~/ProductsImage/image-placeholder.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <b>Product Name</b><br />
-                            Price
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+        <div class="row" id="viewProducts"></div>
         <br />
 
         <div class="row">
@@ -222,6 +209,9 @@
 
 <script>
     $(document).ready(function () {
+
+        viewAllProducts();
+
         $("#priceRange").slider({
             range: true,
             min: 300,
@@ -235,5 +225,11 @@
         $("#amount").val("₱" + $("#priceRange").slider("values", 0) +
             " - ₱" + $("#priceRange").slider("values", 1));
     });
+
+    let viewAllProducts = () => {
+        let url = "/Store/GetAllProducts"
+        $("#viewProducts").load(url)
+    };
+    
 </script>
 

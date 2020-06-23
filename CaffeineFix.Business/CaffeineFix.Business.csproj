@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IProductsBusiness.cs" />
+    <Compile Include="Interface\IStoreBusiness.cs" />
     <Compile Include="ProductsBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoreBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CaffeineFix.Domain\CaffeineFix.Domain.csproj">

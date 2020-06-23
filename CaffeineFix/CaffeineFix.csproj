@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Infrastructure\AutomapperWebProfile.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\StoreViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -592,6 +593,7 @@
     <Content Include="Views\Products\_AddProductForm.cshtml" />
     <Content Include="Views\Products\_EditProductForm.cshtml" />
     <Content Include="Views\Store\Catalog.cshtml" />
+    <Content Include="Views\Store\_Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
