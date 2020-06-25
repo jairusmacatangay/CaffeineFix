@@ -10,5 +10,7 @@ namespace CaffeineFix.Business.Interface
     public interface IStoreBusiness
     {
         List<StoreDomainModel> GetAllProducts();
+        List<StoreDomainModel> GetProductsAutoComplete(string query);
+        List<StoreDomainModel> SearchProduct(string search);
     }
 }

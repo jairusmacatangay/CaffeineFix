@@ -37,5 +37,34 @@ namespace CaffeineFix.Business
 
             return productsList;
         }
+
+        public List<StoreDomainModel> GetProductsAutoComplete(string query)
+        {
+            List<StoreDomainModel> list = productRepository
+                .GetAll(x => x.IsDeleted == false && x.ProductName.ToLower().Contains(query.ToLower()))
+                .Select(x => new StoreDomainModel
+                {
+                    ProductName = x.ProductName
+                }).ToList();
+
+            return list;
+        }
+
+        public List<StoreDomainModel> SearchProduct(string search)
+        {
+            List<StoreDomainModel> productDM = productRepository
+                .GetAll(x => x.ProductName.Contains(search) && x.IsDeleted == false)
+                .Select(x => new StoreDomainModel
+                {
+                    ProductID = x.ProductID,
+                    ProductName = x.ProductName,
+                    Price = x.Price,
+                    ImagePath = x.ProductImage.ImagePath
+                })
+                .Take(1)
+                .ToList();
+
+            return productDM;
+        }
     }
 }

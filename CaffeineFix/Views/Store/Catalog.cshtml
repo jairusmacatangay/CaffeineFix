@@ -13,10 +13,10 @@
     <div class="col-3">
 
         <!--Autocomplete Search-->
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" />
+        <div class="input-group ui-widget">
+            <input type="text" class="form-control" id="autoCompleteProducts" placeholder="Search" />
             <div class="input-group-append">
-                <button class="btn btn-success input-group-text"><i class="fa fa-search"></i></button>
+                <button class="btn btn-success input-group-text" id="searchProduct"><i class="fa fa-search"></i></button>
             </div>
         </div>
         <hr />
@@ -136,7 +136,7 @@
                 <input type="text" class="mx-1" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;" />
             </div>
         </div>
-        
+
         <!--Price Range Slider-->
         <div class="row mt-2">
             <div class="col-9">
@@ -201,7 +201,7 @@
                 </ul>
             </nav>
         </div>
-        
+
     </div>
 
 </div>
@@ -222,14 +222,44 @@
             }
         });
 
-        $("#amount").val("₱" + $("#priceRange").slider("values", 0) +
-            " - ₱" + $("#priceRange").slider("values", 1));
+        $("#amount").val(`₱ ${$("#priceRange").slider("values", 0)} - ₱ ${$("#priceRange").slider("values", 1)}`);
+
+        $("#autoCompleteProducts").autocomplete({
+            source: (request, response) => {
+                let query = $("#autoCompleteProducts").val();
+
+                $.ajax({
+                    type: "GET",
+                    url: `/Store/AutoCompleteProducts?query=${query}`,
+                    data: { query: request.term },
+                    success: (data) => {
+                        response($.map(data, (item) => {
+                            return { label: item.ProductName, value: item.ProductName }
+                        }))
+                    }
+                });
+            }
+        });
+
+        $(document).on("click", "#searchProduct", () => {
+            let searchText = $("#autoCompleteProducts").val();
+
+            $.ajax({
+                type: "POST",
+                url: `/Store/SearchProduct?search=${searchText}`,
+                dataType: "html",
+                success: (response) => {
+                    $("#viewProducts").empty();
+                    $("#viewProducts").html(response);
+                }
+            });
+        });
+
     });
 
     let viewAllProducts = () => {
         let url = "/Store/GetAllProducts"
         $("#viewProducts").load(url)
     };
-    
 </script>
 

@@ -27,12 +27,28 @@ namespace CaffeineFix.Controllers
         public ActionResult GetAllProducts()
         {
             List<StoreDomainModel> storeDM = storeBusiness.GetAllProducts();
-
             List<StoreViewModel> storeVM = new List<StoreViewModel>();
-
             AutoMapper.Mapper.Map(storeDM, storeVM);
-
             return PartialView("_Products", storeVM);
+        }
+
+        public JsonResult AutoCompleteProducts(string query)
+{
+            List<StoreDomainModel> listDM = storeBusiness.GetProductsAutoComplete(query);
+            List<StoreViewModel> listVM = new List<StoreViewModel>();
+            AutoMapper.Mapper.Map(listDM, listVM);
+            return Json(listVM, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SearchProduct(string search)
+        {
+            List<StoreDomainModel> productDM = storeBusiness.SearchProduct(search);
+
+            List<StoreViewModel> productVM = new List<StoreViewModel>();
+
+            AutoMapper.Mapper.Map(productDM, productVM);
+
+            return PartialView("_Products", productVM);
         }
     }
 }
