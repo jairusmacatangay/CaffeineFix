@@ -12,5 +12,6 @@ namespace CaffeineFix.Business.Interface
         List<StoreDomainModel> GetAllProducts();
         List<StoreDomainModel> GetProductsAutoComplete(string query);
         List<StoreDomainModel> SearchProduct(string search);
+        List<StoreDomainModel> FilterProductsBy(string filterOption);
     }
 }

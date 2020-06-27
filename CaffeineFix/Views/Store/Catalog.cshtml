@@ -21,18 +21,10 @@
         </div>
         <hr />
 
-        <b>Categories</b>
-
-        <!--All Checkbox-->
-        <div class="form-check mt-2">
-            <input class="form-check-input" type="checkbox" value="" id="checkAll">
-            <label class="form-check-label text-muted" for="checkAll">
-                All
-            </label>
-        </div>
+        <div class="mb-2"><b>Categories</b></div>
 
         <!--Coffee Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckCoffee">
             <input class="form-check-input" type="checkbox" value="" id="checkCoffee">
             <label class="form-check-label text-muted" for="checkCoffee">
                 Coffee
@@ -40,7 +32,7 @@
         </div>
 
         <!--Equipment Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckEquipment">
             <input class="form-check-input" type="checkbox" value="" id="checkEquipment">
             <label class="form-check-label text-muted" for="checkEquipment">
                 Equipment
@@ -48,7 +40,7 @@
         </div>
 
         <!--Drinkware Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckDrinkware">
             <input class="form-check-input" type="checkbox" value="" id="checkDrinkware">
             <label class="form-check-label text-muted" for="checkDrinkware">
                 Drinkware
@@ -56,10 +48,10 @@
         </div>
         <hr />
 
-        <b>Coffee</b>
+        <div class="mb-2"><b>Coffee</b></div>
 
         <!--Dark Roast Checkbox-->
-        <div class="form-check mt-2">
+        <div class="form-check" id="groupCheckDarkRoast">
             <input class="form-check-input" type="checkbox" value="" id="checkDarkRoast">
             <label class="form-check-label text-muted" for="checkDarkRoast">
                 Dark Roast
@@ -67,7 +59,7 @@
         </div>
 
         <!--Medium Roast Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckMediumRoast">
             <input class="form-check-input" type="checkbox" value="" id="checkMediumRoast">
             <label class="form-check-label text-muted" for="checkMediumRoast">
                 Medium Roast
@@ -75,7 +67,7 @@
         </div>
 
         <!--Blonde Roast Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckBlondeRoast">
             <input class="form-check-input" type="checkbox" value="" id="checkBlondeRoast">
             <label class="form-check-label text-muted" for="checkBlondeRoast">
                 Blonde Roast
@@ -83,10 +75,10 @@
         </div>
         <hr />
 
-        <b>Equipment</b>
+        <div class="mb-2"><b>Equipment</b></div>
 
         <!--Coffee Supplies Checkbox-->
-        <div class="form-check mt-2">
+        <div class="form-check" id="groupCheckCoffeeSupplies">
             <input class="form-check-input" type="checkbox" value="" id="checkCoffeeSupplies">
             <label class="form-check-label text-muted" for="checkCoffeeSupplies">
                 Coffee Supplies
@@ -94,7 +86,7 @@
         </div>
 
         <!--Coffee Maker Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckCoffeeMaker">
             <input class="form-check-input" type="checkbox" value="" id="checkCoffeeMaker">
             <label class="form-check-label text-muted" for="checkCoffeeMaker">
                 Coffee Maker
@@ -102,7 +94,7 @@
         </div>
 
         <!--Grinder Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckGrinder">
             <input class="form-check-input" type="checkbox" value="" id="checkGrinder">
             <label class="form-check-label text-muted" for="checkGrinder">
                 Grinder
@@ -110,10 +102,10 @@
         </div>
         <hr />
 
-        <b>Drinkware</b>
+        <div class="mb-2"><b>Drinkware</b></div>
 
         <!--Mug Checkbox-->
-        <div class="form-check mt-2">
+        <div class="form-check mt-2" id="groupCheckMug">
             <input class="form-check-input" type="checkbox" value="" id="checkMug">
             <label class="form-check-label text-muted" for="checkMug">
                 Mug
@@ -121,7 +113,7 @@
         </div>
 
         <!--Tumblr Checkbox-->
-        <div class="form-check">
+        <div class="form-check" id="groupCheckTumblr">
             <input class="form-check-input" type="checkbox" value="" id="checkTumblr">
             <label class="form-check-label text-muted" for="checkTumblr">
                 Tumblr
@@ -209,7 +201,6 @@
 
 <script>
     $(document).ready(function () {
-
         viewAllProducts();
 
         $("#priceRange").slider({
@@ -255,11 +246,258 @@
             });
         });
 
+        $("#checkCoffee").change(() => {
+            if (document.getElementById("checkCoffee").checked) {
+                $("#groupCheckEquipment").hide();
+                $("#groupCheckDrinkware").hide();
+                setFalseToCheckbox("checkCoffee");
+                displayCheckboxOptions(groupNotCategory);
+                ajaxFilterProductsBy("Coffee");
+            } else {
+                $("#groupCheckEquipment").show();
+                $("#groupCheckDrinkware").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkEquipment").change(() => {
+            if (document.getElementById("checkEquipment").checked) {
+                $("#groupCheckCoffee").hide();
+                $("#groupCheckDrinkware").hide();
+                setFalseToCheckbox("checkEquipment");
+                displayCheckboxOptions(groupNotCategory);
+                ajaxFilterProductsBy("Equipment");
+            } else {
+                $("#groupCheckCoffee").show();
+                $("#groupCheckDrinkware").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkDrinkware").change(() => {
+            if (document.getElementById("checkDrinkware").checked) {
+                $("#groupCheckCoffee").hide();
+                $("#groupCheckEquipment").hide();
+                setFalseToCheckbox("checkDrinkware");
+                displayCheckboxOptions(groupNotCategory);
+                ajaxFilterProductsBy("Drinkware");
+            } else {
+                $("#groupCheckCoffee").show();
+                $("#groupCheckEquipment").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkDarkRoast").change(() => {
+            if (document.getElementById("checkDarkRoast").checked) {
+                $("#groupCheckMediumRoast").hide();
+                $("#groupCheckBlondeRoast").hide();
+                setFalseToCheckbox("checkDarkRoast");
+                displayCheckboxOptions(groupNotCoffee);
+                ajaxFilterProductsBy("Dark Roast");
+            } else {
+                $("#groupCheckMediumRoast").show();
+                $("#groupCheckBlondeRoast").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkMediumRoast").change(() => {
+            if (document.getElementById("checkMediumRoast").checked) {
+                $("#groupCheckDarkRoast").hide();
+                $("#groupCheckBlondeRoast").hide();
+                setFalseToCheckbox("checkMediumRoast");
+                displayCheckboxOptions(groupNotCoffee);
+                ajaxFilterProductsBy("Medium Roast");
+            } else {
+                $("#groupCheckDarkRoast").show();
+                $("#groupCheckBlondeRoast").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkBlondeRoast").change(() => {
+            if (document.getElementById("checkBlondeRoast").checked) {
+                $("#groupCheckDarkRoast").hide();
+                $("#groupCheckMediumRoast").hide();
+                setFalseToCheckbox("checkBlondeRoast");
+                displayCheckboxOptions(groupNotCoffee);
+                ajaxFilterProductsBy("Light Roast");
+            } else {
+                $("#groupCheckDarkRoast").show();
+                $("#groupCheckMediumRoast").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkCoffeeSupplies").change(() => {
+            if (document.getElementById("checkCoffeeSupplies").checked) {
+                $("#groupCheckCoffeeMaker").hide();
+                $("#groupCheckGrinder").hide();
+                setFalseToCheckbox("checkCoffeeSupplies");
+                displayCheckboxOptions(groupNotEquipment);
+                ajaxFilterProductsBy("Coffee Supplies");
+            } else {
+                $("#groupCheckCoffeeMaker").show();
+                $("#groupCheckGrinder").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkCoffeeMaker").change(() => {
+            if (document.getElementById("checkCoffeeMaker").checked) {
+                $("#groupCheckCoffeeSupplies").hide();
+                $("#groupCheckGrinder").hide();
+                setFalseToCheckbox("checkCoffeeMaker");
+                displayCheckboxOptions(groupNotEquipment);
+                ajaxFilterProductsBy("Coffee Maker");
+            } else {
+                $("#groupCheckCoffeeSupplies").show();
+                $("#groupCheckGrinder").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkGrinder").change(() => {
+            if (document.getElementById("checkGrinder").checked) {
+                $("#groupCheckCoffeeSupplies").hide();
+                $("#groupCheckCoffeeMaker").hide();
+                setFalseToCheckbox("checkGrinder");
+                displayCheckboxOptions(groupNotEquipment);
+                ajaxFilterProductsBy("Grinder");
+            } else {
+                $("#groupCheckCoffeeSupplies").show();
+                $("#groupCheckCoffeeMaker").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkMug").change(() => {
+            if (document.getElementById("checkMug").checked) {
+                $("#groupCheckTumblr").hide();
+                setFalseToCheckbox("checkMug");
+                displayCheckboxOptions(groupNotDrinkware);
+                ajaxFilterProductsBy("Mug");
+            } else {
+                $("#groupCheckTumblr").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
+
+        $("#checkTumblr").change(() => {
+            if (document.getElementById("checkTumblr").checked) {
+                $("#groupCheckMug").hide();
+                setFalseToCheckbox("checkTumblr");
+                displayCheckboxOptions(groupNotDrinkware);
+                ajaxFilterProductsBy("Tumblr");
+            } else {
+                $("#groupCheckMug").show();
+                $("#viewProducts").empty();
+                viewAllProducts();
+            }
+        });
     });
 
     let viewAllProducts = () => {
         let url = "/Store/GetAllProducts"
         $("#viewProducts").load(url)
     };
+
+    let checkboxOptions = [
+        "checkCoffee",
+        "checkEquipment",
+        "checkDrinkware",
+        "checkDarkRoast",
+        "checkMediumRoast",
+        "checkBlondeRoast",
+        "checkCoffeeSupplies",
+        "checkCoffeeMaker",
+        "checkGrinder",
+        "checkMug",
+        "checkTumblr"
+    ];
+
+    let groupNotCategory = [
+        "#groupCheckDarkRoast",
+        "#groupCheckMediumRoast",
+        "#groupCheckBlondeRoast",
+        "#groupCheckCoffeeSupplies",
+        "#groupCheckCoffeeMaker",
+        "#groupCheckGrinder",
+        "#groupCheckMug",
+        "#groupCheckTumblr"
+    ];
+
+    let groupNotCoffee = [
+        "#groupCheckCoffee",
+        "#groupCheckEquipment",
+        "#groupCheckDrinkware",
+        "#groupCheckCoffeeSupplies",
+        "#groupCheckCoffeeMaker",
+        "#groupCheckGrinder",
+        "#groupCheckMug",
+        "#groupCheckTumblr"
+    ];
+
+    let groupNotEquipment = [
+        "#groupCheckCoffee",
+        "#groupCheckEquipment",
+        "#groupCheckDrinkware",
+        "#groupCheckDarkRoast",
+        "#groupCheckMediumRoast",
+        "#groupCheckBlondeRoast",
+        "#groupCheckMug",
+        "#groupCheckTumblr"
+    ];
+
+    let groupNotDrinkware = [
+        "#groupCheckCoffee",
+        "#groupCheckEquipment",
+        "#groupCheckDrinkware",
+        "#groupCheckDarkRoast",
+        "#groupCheckMediumRoast",
+        "#groupCheckBlondeRoast",
+        "#groupCheckCoffeeSupplies",
+        "#groupCheckCoffeeMaker",
+        "#groupCheckGrinder"
+    ];
+
+    let setFalseToCheckbox = (id) => {
+        for (i = 0; i < checkboxOptions.length; i++) {
+            if (document.getElementById(checkboxOptions[i]).checked) {
+                if (checkboxOptions[i] === id) continue;
+                $(`#${checkboxOptions[i]}`).prop("checked", false);
+            }
+        }
+    };
+
+    let displayCheckboxOptions = (arrayOptions) => {
+        for (i = 0; i < arrayOptions.length; i++) {
+            $(arrayOptions[i]).show();
+        }
+    };
+
+    let ajaxFilterProductsBy = (filterOption) => {
+        $.ajax({
+            type: "POST",
+            url: `/Store/FilterProductsBy?filterOption=${filterOption}`,
+            dataType: "html",
+            success: (response) => {
+                $("#viewProducts").empty();
+                $("#viewProducts").html(response);
+            }
+        });
+    };
+
 </script>
 

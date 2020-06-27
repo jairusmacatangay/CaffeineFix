@@ -66,5 +66,73 @@ namespace CaffeineFix.Business
 
             return productDM;
         }
+
+        public List<StoreDomainModel> FilterProductsBy(string filterOption)
+        {
+            List<StoreDomainModel> filteredList = new List<StoreDomainModel>();
+
+            if (filterOption == "Coffee" ||
+                filterOption == "Equipment" ||
+                filterOption == "Drinkware")
+            {
+                filteredList = productRepository
+                    .GetAll(x => x.ProductCategory.ProductCategoryName.Contains(filterOption) && x.IsDeleted == false)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return filteredList;
+            }
+            else if (filterOption == "Dark Roast" ||
+                     filterOption == "Medium Roast" ||
+                     filterOption == "Light Roast")
+            {
+                filteredList = productRepository
+                    .GetAll(x => x.RoastLevel.RoastLevelLabel.Contains(filterOption) && x.IsDeleted == false)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return filteredList;
+            }
+            else if (filterOption == "Coffee Supplies" ||
+                     filterOption == "Coffee Maker" ||
+                     filterOption == "Grinder")
+            {
+                filteredList = productRepository
+                    .GetAll(x => x.EquipmentType.EquipmentTypeLabel.Contains(filterOption) && x.IsDeleted == false)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return filteredList;
+            }
+            else
+            {
+                filteredList = productRepository
+                    .GetAll(x => x.DrinkwareType.DrinkwareTypeLabel.Contains(filterOption) && x.IsDeleted == false)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return filteredList;
+            }
+        }
     }
 }

@@ -43,12 +43,17 @@ namespace CaffeineFix.Controllers
         public ActionResult SearchProduct(string search)
         {
             List<StoreDomainModel> productDM = storeBusiness.SearchProduct(search);
-
             List<StoreViewModel> productVM = new List<StoreViewModel>();
-
             AutoMapper.Mapper.Map(productDM, productVM);
-
             return PartialView("_Products", productVM);
+        }
+
+        public ActionResult FilterProductsBy(string filterOption)
+        {
+            List<StoreDomainModel> filterdListDM = storeBusiness.FilterProductsBy(filterOption);
+            List<StoreViewModel> filteredListVM = new List<StoreViewModel>();
+            AutoMapper.Mapper.Map(filterdListDM, filteredListVM);
+            return PartialView("_Products", filteredListVM);
         }
     }
 }
