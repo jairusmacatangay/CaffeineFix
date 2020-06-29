@@ -134,5 +134,20 @@ namespace CaffeineFix.Business
                 return filteredList;
             }
         }
+
+        public List<StoreDomainModel> FilterByPrice(decimal minPrice, decimal maxPrice)
+        {
+            List<StoreDomainModel> prcFltrdList = productRepository
+                .GetAll(x => x.Price > minPrice && x.Price < maxPrice && x.IsDeleted == false)
+                .Select(x => new StoreDomainModel
+                {
+                    ProductID = x.ProductID,
+                    ProductName = x.ProductName,
+                    Price = x.Price,
+                    ImagePath = x.ProductImage.ImagePath
+                }).ToList();
+
+            return prcFltrdList;
+        }
     }
 }

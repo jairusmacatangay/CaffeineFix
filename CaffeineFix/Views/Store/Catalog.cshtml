@@ -135,7 +135,7 @@
                 <div class="mt-2 ml-2" id="priceRange"></div>
             </div>
             <div class="col-3">
-                <button class="btn btn-success btn-sm">Go</button>
+                <button class="btn btn-success btn-sm" id="filterRange">Go</button>
             </div>
         </div>
     </div>
@@ -214,6 +214,23 @@
         });
 
         $("#amount").val(`₱ ${$("#priceRange").slider("values", 0)} - ₱ ${$("#priceRange").slider("values", 1)}`);
+        
+        $(document).on("click", "#filterRange", () => {
+            let minPrice = $("#priceRange").slider("values", 0);
+            let maxPrice = $("#priceRange").slider("values", 1);
+
+            $.ajax({
+                type: "POST",
+                url: "/Store/FilterByPrice",
+                data: { minPrice: minPrice, maxPrice: maxPrice },
+                dataType: "html",
+                success: (response) => {
+                    $("#viewProducts").empty();
+                    $("#viewProducts").html(response);
+                }
+            });
+
+        });
 
         $("#autoCompleteProducts").autocomplete({
             source: (request, response) => {
@@ -498,6 +515,5 @@
             }
         });
     };
-
 </script>
 

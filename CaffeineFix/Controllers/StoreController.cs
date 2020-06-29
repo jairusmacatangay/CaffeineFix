@@ -55,5 +55,13 @@ namespace CaffeineFix.Controllers
             AutoMapper.Mapper.Map(filterdListDM, filteredListVM);
             return PartialView("_Products", filteredListVM);
         }
+
+        public ActionResult FilterByPrice(decimal minPrice, decimal maxPrice)
+        {
+            List<StoreDomainModel> prcFltrdLstDM = storeBusiness.FilterByPrice(minPrice, maxPrice);
+            List<StoreViewModel> prcFltrdLstVM = new List<StoreViewModel>();
+            AutoMapper.Mapper.Map(prcFltrdLstDM, prcFltrdLstVM);
+            return PartialView("_Products", prcFltrdLstVM);
+        }
     }
 }
