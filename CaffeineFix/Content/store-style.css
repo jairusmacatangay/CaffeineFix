@@ -1,0 +1,11 @@
+﻿#gridView:hover {
+    cursor: pointer;
+}
+
+#listView:hover {
+    cursor: pointer;
+}
+
+#listView {
+    color: darkgray;
+}

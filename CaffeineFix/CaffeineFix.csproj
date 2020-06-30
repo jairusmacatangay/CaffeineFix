@@ -331,6 +331,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\store-style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -595,6 +596,7 @@
     <Content Include="Views\Products\_EditProductForm.cshtml" />
     <Content Include="Views\Store\Catalog.cshtml" />
     <Content Include="Views\Store\_Products.cshtml" />
+    <Content Include="Views\Store\_ProductsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

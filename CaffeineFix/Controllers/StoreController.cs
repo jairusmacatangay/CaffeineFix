@@ -33,12 +33,20 @@ namespace CaffeineFix.Controllers
             return View();
         }
 
-        public ActionResult GetAllProducts()
+        public ActionResult GetAllProducts(string view)
         {
             List<StoreDomainModel> storeDM = storeBusiness.GetAllProducts();
             List<StoreViewModel> storeVM = new List<StoreViewModel>();
             AutoMapper.Mapper.Map(storeDM, storeVM);
-            return PartialView("_Products", storeVM);
+            
+            if (view == "grid")
+            {
+                return PartialView("_Products", storeVM);
+            }
+            else
+            {
+                return PartialView("_ProductsList", storeVM);
+            }            
         }
 
         public JsonResult AutoCompleteProducts(string query)
@@ -49,36 +57,70 @@ namespace CaffeineFix.Controllers
             return Json(listVM, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SearchProduct(string search)
+        public ActionResult SearchProduct(string search, string view)
         {
             List<StoreDomainModel> productDM = storeBusiness.SearchProduct(search);
             List<StoreViewModel> productVM = new List<StoreViewModel>();
             AutoMapper.Mapper.Map(productDM, productVM);
-            return PartialView("_Products", productVM);
+
+            if (view == "grid")
+            {
+                return PartialView("_Products", productVM);
+            }
+            else
+            {
+                return PartialView("_ProductsList", productVM);
+            }
         }
 
-        public ActionResult FilterProductsBy(string filterOption)
+        public ActionResult FilterProductsBy(string filterOption, string view)
         {
             List<StoreDomainModel> filterdListDM = storeBusiness.FilterProductsBy(filterOption);
             List<StoreViewModel> filteredListVM = new List<StoreViewModel>();
             AutoMapper.Mapper.Map(filterdListDM, filteredListVM);
-            return PartialView("_Products", filteredListVM);
+
+            if (view == "grid")
+            {
+                return PartialView("_Products", filteredListVM);
+            }
+            else
+            {
+                return PartialView("_ProductsList", filteredListVM);
+            }
+            
         }
 
-        public ActionResult FilterByPrice(decimal minPrice, decimal maxPrice)
+        public ActionResult FilterByPrice(decimal minPrice, decimal maxPrice, string view)
         {
             List<StoreDomainModel> prcFltrdLstDM = storeBusiness.FilterByPrice(minPrice, maxPrice);
             List<StoreViewModel> prcFltrdLstVM = new List<StoreViewModel>();
             AutoMapper.Mapper.Map(prcFltrdLstDM, prcFltrdLstVM);
-            return PartialView("_Products", prcFltrdLstVM);
+
+            if (view == "grid")
+            {
+                return PartialView("_Products", prcFltrdLstVM);
+            }
+            else
+            {
+                return PartialView("_ProductsList", prcFltrdLstVM);
+            }
+            
         }
 
-        public ActionResult SortProductsBy(string selectedOption)
+        public ActionResult SortProductsBy(string selectedOption, string view)
         {
             List<StoreDomainModel> sortedProductsListDM = storeBusiness.SortProductsBy(selectedOption);
             List<StoreViewModel> sortedProductsListVM = new List<StoreViewModel>();
             AutoMapper.Mapper.Map(sortedProductsListDM, sortedProductsListVM);
-            return PartialView("_Products", sortedProductsListVM);
+
+            if (view == "grid")
+            {
+                return PartialView("_Products", sortedProductsListVM);
+            }
+            else
+            {
+                return PartialView("_ProductsList", sortedProductsListVM);
+            }
         }
     }
 }
