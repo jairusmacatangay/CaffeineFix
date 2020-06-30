@@ -152,15 +152,9 @@
 
             <div class="col-4">
                 <div class="form-row">
-                    <span class="col-3"></span>
+                    <span class="col-2"></span>
                     <label class="col-3 mt-2">Sort by: </label>
-                    <select class="custom-select col-6">
-                        <option select>---</option>
-                        <option>Price low to high</option>
-                        <option>Price high to low</option>
-                        <option>Latest</option>
-                        <option>Oldest</option>
-                    </select>
+                    @Html.DropDownList("sortOption", ViewBag.SortOptions as SelectList, "Select", new { @class = "form-control col-7" })
                 </div>
             </div>
 
@@ -423,6 +417,23 @@
                 viewAllProducts();
             }
         });
+
+        $("#sortOption").change(() => {
+            let selectedOption = document.getElementById('sortOption').value;
+
+            $.ajax({
+                type: "POST",
+                url: "/Store/SortProductsBy",
+                data: { selectedOption: selectedOption },
+                dataType: "html",
+                success: (response) => {
+                    $("#viewProducts").empty();
+                    $("#viewProducts").html(response);
+                }
+            });
+
+        });
+
     });
 
     let viewAllProducts = () => {
@@ -515,5 +526,6 @@
             }
         });
     };
+
 </script>
 

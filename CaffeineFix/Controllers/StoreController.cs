@@ -21,6 +21,15 @@ namespace CaffeineFix.Controllers
 
         public ActionResult Catalog()
         {
+            List<SortProductsByViewModel> sortList = new List<SortProductsByViewModel>();
+
+            sortList.Add(new SortProductsByViewModel { SortID = 1, SortOption = "Price low to high" });
+            sortList.Add(new SortProductsByViewModel { SortID = 2, SortOption = "Price high to low" });
+            sortList.Add(new SortProductsByViewModel { SortID = 3, SortOption = "Recent" });
+            sortList.Add(new SortProductsByViewModel { SortID = 4, SortOption = "Oldest" });
+
+            ViewBag.SortOptions = new SelectList(sortList, "SortID", "SortOption");
+
             return View();
         }
 
@@ -62,6 +71,14 @@ namespace CaffeineFix.Controllers
             List<StoreViewModel> prcFltrdLstVM = new List<StoreViewModel>();
             AutoMapper.Mapper.Map(prcFltrdLstDM, prcFltrdLstVM);
             return PartialView("_Products", prcFltrdLstVM);
+        }
+
+        public ActionResult SortProductsBy(string selectedOption)
+        {
+            List<StoreDomainModel> sortedProductsListDM = storeBusiness.SortProductsBy(selectedOption);
+            List<StoreViewModel> sortedProductsListVM = new List<StoreViewModel>();
+            AutoMapper.Mapper.Map(sortedProductsListDM, sortedProductsListVM);
+            return PartialView("_Products", sortedProductsListVM);
         }
     }
 }

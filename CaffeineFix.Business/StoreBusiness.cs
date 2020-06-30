@@ -149,5 +149,85 @@ namespace CaffeineFix.Business
 
             return prcFltrdList;
         }
+
+        public List<StoreDomainModel> SortProductsBy(string selectedOption)
+        {
+            List<StoreDomainModel> sortedProductsList = new List<StoreDomainModel>();
+
+            if (selectedOption == "1")
+            {
+                sortedProductsList = productRepository
+                    .GetAll(x => x.IsDeleted == false)
+                    .OrderBy(x => x.Price)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return sortedProductsList;
+            }
+            else if (selectedOption == "2")
+            {
+                sortedProductsList = productRepository
+                    .GetAll(x => x.IsDeleted == false)
+                    .OrderByDescending(x => x.Price)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return sortedProductsList;
+            }
+            else if (selectedOption == "3")
+            {
+                sortedProductsList = productRepository
+                    .GetAll(x => x.IsDeleted == false)
+                    .OrderBy(x => x.DateCreated)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return sortedProductsList;
+            }
+            else if (selectedOption == "4")
+            {
+                sortedProductsList = productRepository
+                    .GetAll(x => x.IsDeleted == false)
+                    .OrderByDescending(x => x.DateCreated)
+                    .Select(x => new StoreDomainModel
+                    {
+                        ProductID = x.ProductID,
+                        ProductName = x.ProductName,
+                        Price = x.Price,
+                        ImagePath = x.ProductImage.ImagePath
+                    }).ToList();
+
+                return sortedProductsList;
+            }
+            else
+            {
+                List<StoreDomainModel> productsList = productRepository
+                .GetAll(x => x.IsDeleted == false)
+                .Select(x => new StoreDomainModel
+                {
+                    ProductID = x.ProductID,
+                    ProductName = x.ProductName,
+                    Price = x.Price,
+                    ImagePath = x.ProductImage.ImagePath
+                }).ToList();
+
+                return productsList;
+            }
+        }
     }
 }

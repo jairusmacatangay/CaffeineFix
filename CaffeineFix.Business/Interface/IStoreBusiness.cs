@@ -14,5 +14,6 @@ namespace CaffeineFix.Business.Interface
         List<StoreDomainModel> SearchProduct(string search);
         List<StoreDomainModel> FilterProductsBy(string filterOption);
         List<StoreDomainModel> FilterByPrice(decimal minPrice, decimal maxPrice);
+        List<StoreDomainModel> SortProductsBy(string selectedOption);
     }
 }

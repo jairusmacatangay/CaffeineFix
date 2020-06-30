@@ -161,6 +161,7 @@
     </Compile>
     <Compile Include="Infrastructure\AutomapperWebProfile.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\SortProductsByViewModel.cs" />
     <Compile Include="Models\StoreViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
